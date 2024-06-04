@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bike.mapper.BikeMapper">
+    <!--查询所有车辆信息-->
+    <select id="showBike" resultType="com.example.bike.bean.Bike">
+        select * from bike
+    </select>
+    <!--删除车辆信息-->
+    <delete id="deleteBike" parameterType="int">
+        delete from bike where id = #{id}
+    </delete>
+    <!--更改车辆信息-->
+    <update id="updateBike" parameterType="com.example.bike.bean.Bike">
+        update bike set bikeNumber=#{bikeNumber},status=#{status},longitude=#{longitude},latitude=#{latitude},createTime=#{createTime},lastUpdateTime=#{lastUpdateTime},fenceId=#{fenceId} where id=#{id}
+    </update>
+    <!--添加车辆信息-->
+    <insert id="addBike" parameterType="com.example.bike.bean.Bike">
+        INSERT INTO bike VALUES(null ,#{bikeNumber},#{status},#{longitude},#{latitude},#{createTime},#{lastUpdateTime},#{fenceId})
+    </insert>
+    <!--根据车辆编号查询车辆信息-->
+    <select id="findBikeByNum" parameterType="String" resultType="com.example.bike.bean.Bike">
+        select * from bike where bikeNumber=#{bikeNumber} ;
+    </select>
+</mapper>

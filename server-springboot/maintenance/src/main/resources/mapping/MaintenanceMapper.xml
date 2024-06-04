@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.maintenance.mapper.MaintenanceMapper">
+    <!--查询所有维修信息-->
+    <select id="showMaintenance" resultType="com.example.maintenance.bean.Maintenance">
+        select * from maintenance
+    </select>
+    <!--删除维修信息-->
+    <delete id="deleteMaintenance" parameterType="int">
+        delete from maintenance where id = #{id}
+    </delete>
+    <!--更改维修信息-->
+    <update id="updateMaintenance" parameterType="com.example.maintenance.bean.Maintenance">
+        update maintenance set bikeNumber=#{bikeNumber},maintenanceTime=#{maintenanceTime},maintenanceType=#{maintenanceType},maintenanceStatus=#{maintenanceStatus} where id=#{id}
+    </update>
+    <!--添加维修信息-->
+    <insert id="addMaintenance" parameterType="com.example.maintenance.bean.Maintenance">
+        INSERT INTO maintenance VALUES(null ,#{bikeNumber},#{maintenanceTime},#{maintenanceType},#{maintenanceStatus})
+    </insert>
+    <!--根据车辆编号查询维修信息-->
+    <select id="findMaintenanceByNum" parameterType="String" resultType="com.example.maintenance.bean.Maintenance">
+        select * from maintenance where bikeNumber=#{bikeNumber} ;
+    </select>
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/CampusSharedBikeServer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Charity/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Fence/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/GateWay/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/LoginCloud/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Predict/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bike/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/maintenance/src/main/java" charset="UTF-8" />
+  </component>
+</project>
