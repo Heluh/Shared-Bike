@@ -37,8 +37,9 @@ public class Prediction {
     public Object preWater1(@RequestBody Map<String,String> map) throws IOException, ParseException, InterruptedException {
         System.out.println("预测网关调用成功");
         //原始数据
-        File file = new File("D:\\shixun\\final\\server-springboot\\Predict\\src\\main\\resources\\csv\\fallraw_7041JA26clea.csv");
+        File file = new File("Predict/src/main/resources/csv/fallraw_7041JA26clea.csv");
         String csvPath = file.getAbsolutePath();
+        System.out.println(csvPath);
 
         CsvReader csvReader = new CsvReader();
         csvReader.setContainsHeader(true);

@@ -39,15 +39,15 @@ x_pre = data_sblocck(x_set, sblock)
 
 # 加载模型
 if javaToPy[2] == '单层LSTM':  # 单层lstm 模型
-    model = tf.keras.models.load_model(r'D:\shixun\final\server-springboot\\Predict\\python\\model\\1lstm.h5')
+    model = tf.keras.models.load_model("../model/1lstm.h5")
 elif javaToPy[2] == '双层LSTM':  # 双层lstm 模型
-    model = tf.keras.models.load_model(r'D:\shixun\final\server-springboot\\Predict\\python\\model\\2lstm.h5')
+    model = tf.keras.models.load_model("../model/2lstm.h5")
 elif javaToPy[2] == 'GRU':  # GRU 模型
-    model = tf.keras.models.load_model(r'D:\shixun\final\server-springboot\\Predict\\python\\model\\GRU.h5')
+    model = tf.keras.models.load_model("../model/GRU.h5")
 elif javaToPy[2] == 'simpleRNN':  # SimpleRNN 模型
-    model = tf.keras.models.load_model(r'D:\shixun\final\server-springboot\\Predict\\python\\model\\simpleRNN.h5')
+    model = tf.keras.models.load_model("../model/simpleRNN.h5")
 else:
-    model = tf.keras.models.load_model(r'E:\\实训04\\server-springboot\\Predict\\python\\model\\BiRNN.h5')
+    model = tf.keras.models.load_model("../model/BiRNN.h5")
 
 # model = tf.keras.models.load_model(r'D:\Program\workspace\java\Idea\water levels\python\model\lstm.h5')
 

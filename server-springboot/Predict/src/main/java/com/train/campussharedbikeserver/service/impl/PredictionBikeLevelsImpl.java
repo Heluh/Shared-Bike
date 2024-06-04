@@ -23,8 +23,7 @@ public class PredictionBikeLevelsImpl implements PredictionBikeLevels {
 //    private RedissonClient redisson;
 
     private final String python = "C:\\Users\\l1065\\AppData\\Local\\Programs\\Python\\Python39\\python.exe";
-    private final String pyPath = "D:\\shixun\\final\\server-springboot\\Predict\\python\\main.py";
-
+    private final String pyPath = "../resources/python/main.py";
     @Override
     public List<Double> preBikeLevels(String type, String csvPath) throws IOException, InterruptedException {
         //预测数据

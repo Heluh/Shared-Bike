@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CampusSharedBikeServer/CampusSharedBikeServer.iml" filepath="$PROJECT_DIR$/CampusSharedBikeServer/CampusSharedBikeServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GateWay/GateWay.iml" filepath="$PROJECT_DIR$/GateWay/GateWay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LoginCloud/LoginCloud.iml" filepath="$PROJECT_DIR$/LoginCloud/LoginCloud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Predict/Predict.iml" filepath="$PROJECT_DIR$/Predict/Predict.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/server-springboot.iml" filepath="$PROJECT_DIR$/.idea/server-springboot.iml" />
     </modules>
   </component>
