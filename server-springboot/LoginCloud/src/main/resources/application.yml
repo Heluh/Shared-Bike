@@ -1,0 +1,34 @@
+#server:
+#  port: 8081
+#spring:
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/mybatisdemo?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+#    driver-class-name: com.mysql.jdbc.Driver
+#    username: root
+#    password: 12345
+#  application:
+#    name: LoginService
+#  profiles:
+#    active: dev
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 127.0.0.1:8848
+#
+#springdoc:
+#  packages-to-scan: com.example.mybatisdemo.controller
+##  设置访问路径
+#  api-docs:
+#    path: /api-docs
+#  swagger-ui:
+#    path: /swagger-ui.html
+#
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.example.mybatisdemo.bean
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/shared_bike?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 12345678

@@ -1,0 +1,75 @@
+server:
+  port: 8889
+Spring:
+  application:
+    name: GateWayService # 服务名称
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true  #表明gateway开启服务注册和发现的功能，并且spring cloud gateway自动根据服务发现为每一个服务创建了一个router，这个router将以服务名开头的请求路径转发到对应的服务
+          lower-case-service-id: true  #是将请求路径上的服务名配置为小写（因为服务注册的时候，向注册中心注册时将服务名转成大写的了
+      globalcors:
+        cors-configurations:
+            '[/**]':
+                allowedOrigins: '*'
+                allowedMethods: '*'
+                allowedHeaders: '*'
+      routes:
+        - id: InfoShowService  #自定义id,无意义但不能重复，最好跟服务名保持一致
+          uri: lb://InfoShow-service  # 注册中心中的服务
+          predicates:
+            - Path=/InfoShow-service/** # 转发该路径
+          filters:
+            - StripPrefix=1 #必须加上StripPrefix=1，否则访问服务时会带上user
+
+        - id: LoginService  #自定义id,无意义但不能重复，最好跟服务名保持一致
+          uri: lb://login-service  # 注册中心中的服务
+          predicates:
+            - Path=/login-service/** # 转发该路径
+          filters:
+            - StripPrefix=1 #必须加上StripPrefix=1，否则访问服务时会带上user
+
+        - id: fenceservice
+          uri: lb://fence-service
+          predicates:
+            - Path=/fence-service/**
+          filters:
+            - StripPrefix=1 #必须加上StripPrefix=1，否则访问服务时会带上user
+
+        - id: BikeService
+          uri: lb://Bike-service
+          predicates:
+              - Path=/Bike-service/**
+          filters:
+              - StripPrefix=1
+
+        - id: Maintenanceservice
+          uri: lb://Maintenance-service
+          predicates:
+              - Path=/Maintenance-service/**
+          filters:
+              - StripPrefix=1
+
+        - id: CharityService
+          uri: lb://charity-service
+          predicates:
+            - Path=/charity-service/**
+          filters:
+            - StripPrefix=1
+
+        - id: PredictService
+          uri: lb://prediction-service
+          predicates:
+            - Path=/prediction-service/**
+          filters:
+            - StripPrefix=1
+#logging:
+#  level:
+#    org:
+#      springframework:
+#        cloud:
+#          gateway: TRACE

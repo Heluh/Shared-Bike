@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.campussharedbikeservercharity.mapper.CharityMapper">
+
+    <!-- 获取所有捐赠活动 -->
+    <select id="getAllCharityEvents" resultType="com.train.campussharedbikeservercharity.entity.CharityEventWithBikeCount">
+        SELECT ce.id, ce.name, ce.start_date, ce.end_date, ce.last_forever, ce.receive_loc_name, COUNT(bfc.bind_bike_id) AS bike_count
+        FROM charityEvent ce
+                 LEFT JOIN bikeFromCharity bfc ON ce.id = bfc.charity_event_id
+        GROUP BY ce.id, ce.name, ce.start_date, ce.end_date, ce.last_forever, ce.receive_loc_name
+        ORDER BY ce.id
+            LIMIT #{page}, #{count}
+    </select>
+
+    <select id="getCharityEventCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM charityEvent
+    </select>
+
+    <!-- 2. 获取一行数据，根据传入的id -->
+    <select id="getCharityEventById" resultType="com.train.campussharedbikeservercharity.entity.CharityEvent">
+        SELECT * FROM charityEvent
+        WHERE id = #{id}
+    </select>
+
+    <!-- 3. 删除一行数据，根据传入的id -->
+    <delete id="deleteCharityEventById">
+        DELETE FROM charityEvent
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 4. 插入一行数据 -->
+    <insert id="insertCharityEvent" parameterType="com.train.campussharedbikeservercharity.entity.CharityEvent">
+        INSERT INTO charityEvent (name, start_date, end_date, last_forever, receive_loc_name, description)
+        VALUES (#{name}, #{start_date}, #{end_date}, #{last_forever}, #{receive_loc_name}, #{description})
+    </insert>
+
+    <!-- 5. 修改一行数据，根据传入的id和全部对应的列数据 -->
+    <update id="updateCharityEvent" parameterType="com.train.campussharedbikeservercharity.entity.CharityEvent">
+        UPDATE charityEvent
+        SET name = #{name}, start_date = #{start_date}, end_date = #{end_date},
+            last_forever = #{last_forever}, receive_loc_name = #{receive_loc_name}, description = #{description}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 获取当前开放的捐赠活动 -->
+    <select id="getOpenCharityEvents" resultType="com.train.campussharedbikeservercharity.entity.CharityEventWithBikeCount">
+        SELECT ce.id, ce.name, ce.start_date, ce.end_date, ce.last_forever, ce.receive_loc_name, COUNT(bfc.bind_bike_id) AS bike_count
+        FROM charityEvent ce
+                 LEFT JOIN bikeFromCharity bfc ON ce.id = bfc.charity_event_id
+        WHERE ce.last_forever = 1 OR (ce.start_date &lt;= NOW() AND ce.end_date &gt;= NOW())
+        GROUP BY ce.id, ce.name, ce.start_date, ce.end_date, ce.last_forever, ce.receive_loc_name
+            LIMIT #{page}, #{count}
+    </select>
+
+    <!-- 获取当前开放的捐赠活动的数量 -->
+    <select id="getOpenCharityEventCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM charityEvent
+        WHERE last_forever = 1 OR (start_date &lt;= NOW() AND end_date &gt;= NOW())
+    </select>
+
+    <select id="getBikesWithNullId" resultType="com.train.campussharedbikeservercharity.entity.BikeFromCharity">
+        SELECT bfc.*, ce.name AS charity_event_name
+        FROM bikeFromCharity bfc
+                 LEFT JOIN charityEvent ce ON bfc.charity_event_id = ce.id
+        WHERE bfc.bind_bike_id IS NULL
+            LIMIT #{page}, #{count}
+    </select>
+
+    <select id="getBikesWithNonNullId" resultType="com.train.campussharedbikeservercharity.entity.BikeFromCharity">
+        SELECT bfc.*, ce.name AS charity_event_name
+        FROM bikeFromCharity bfc
+                 LEFT JOIN charityEvent ce ON bfc.charity_event_id = ce.id
+        WHERE bfc.bind_bike_id IS NOT NULL
+            LIMIT #{page}, #{count}
+    </select>
+
+    <select id="getBikesWithNullIdCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM bikeFromCharity WHERE bind_bike_id IS NULL
+    </select>
+
+    <select id="getBikesWithNonNullIdCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM bikeFromCharity WHERE bind_bike_id IS NOT NULL
+    </select>
+
+    <insert id="addBikeDonation">
+        INSERT INTO bikeFromCharity (user_id, charity_event_id, bike_type, in_time)
+        VALUES (#{user_id}, #{charity_event_id}, #{bike_type}, NOW())
+    </insert>
+
+<!--    <insert id="insertBike" parameterType="com.train.campussharedbikeservercharity.entity.Bike">
+        INSERT INTO bike (bikeNumber, status, longitude, latitude, createTime, lastUpdateTime, fenceId)
+        VALUES (#{bikeNumber}, #{status}, #{longitude}, #{latitude}, #{createTime}, #{lastUpdateTime}, #{fenceId})
+    </insert>-->
+
+    <update id="updateBindBikeId">
+        UPDATE bikeFromCharity
+        SET bind_bike_id = #{bindBikeId}, bind_use_time = NOW()
+        WHERE id = #{bikeId}
+    </update>
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.train.campussharedbikeserverfence.mapper.FenceMapper">
+    <!-- 插入Fence记录 -->
+    <insert id="insertFence" parameterType="com.train.campussharedbikeserverfence.entity.Fence">
+        INSERT INTO fence (fence_name, capacity, current_num, area, fence_points, create_date, type)
+        VALUES (#{fence_name}, #{capacity}, #{current_num}, #{area}, #{fence_points}, #{create_date}, #{type})
+    </insert>
+
+    <!-- 查询Fence记录 -->
+    <select id="getFence" parameterType="int" resultType="com.train.campussharedbikeserverfence.entity.Fence">
+        SELECT * FROM fence WHERE id = #{id}
+    </select>
+
+    <!-- 获取Fence总数 -->
+    <select id="getFenceCount" resultType="int">
+        SELECT COUNT(*) FROM fence
+    </select>
+
+    <!-- 分页查询Fence列表 -->
+    <select id="getFenceList" resultType="com.train.campussharedbikeserverfence.entity.Fence">
+        SELECT * FROM fence LIMIT #{page}, #{size}
+    </select>
+
+    <!-- 更新Fence记录 -->
+    <update id="updateFence" parameterType="com.train.campussharedbikeserverfence.entity.Fence">
+        UPDATE fence SET fence_name = #{fence_name}, capacity = #{capacity}, current_num = #{current_num},
+                         area = #{area}, fence_points = #{fence_points}, create_date = #{create_date}, type = #{type}
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除Fence记录 -->
+    <delete id="deleteFence" parameterType="int">
+        DELETE FROM fence WHERE id = #{id}
+    </delete>
+
+<!--    &lt;!&ndash; 查询Fence图表统计信息 查询出围栏类型type 各自拥有的围栏数量 &ndash;&gt;
+    <select id="getFenceTypeCount">
+        SELECT type, COUNT(*) AS count FROM fence GROUP BY type
+    </select>
+
+    &lt;!&ndash; 查询Fence图表统计信息 查询出围栏类型type=2 各自最大停车数量 &ndash;&gt;
+    <select id="getFenceType2MaxCount">
+        SELECT fence_name, capacity FROM fence WHERE type = 2
+    </select>-->
+</mapper>
