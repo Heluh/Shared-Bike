@@ -12,4 +12,9 @@
     <update id="unlock" parameterType="com.example.androidend.entity.Bike">
         UPDATE bike SET status = 1 WHERE id = #{id}
     </update>
+
+    <!-- 关锁 -->
+    <update id="lock" parameterType="com.example.androidend.entity.Bike">
+        UPDATE bike SET status = 0 WHERE id = #{id}
+    </update>
 </mapper>

@@ -29,4 +29,12 @@ public class BikeService {
             e.printStackTrace();
         }
     }
+
+    public void lock(Integer id) {
+        try {
+            bikeMapper.lock(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

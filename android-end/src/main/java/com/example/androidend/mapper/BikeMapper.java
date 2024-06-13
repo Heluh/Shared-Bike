@@ -11,4 +11,6 @@ public interface BikeMapper {
     List<Bike> findAll();
 
     void unlock(Integer id);
+
+    void lock(Integer id);
 }

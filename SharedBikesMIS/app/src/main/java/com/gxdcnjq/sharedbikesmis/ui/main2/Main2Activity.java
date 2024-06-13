@@ -54,6 +54,8 @@ import com.gxdcnjq.sharedbikesmis.constant.MacConstants;
 import com.gxdcnjq.sharedbikesmis.databinding.ActivityMain2Binding;
 import com.gxdcnjq.sharedbikesmis.entity.Bike;
 import com.gxdcnjq.sharedbikesmis.entity.BikesData;
+import com.gxdcnjq.sharedbikesmis.entity.FenceData;
+import com.gxdcnjq.sharedbikesmis.entity.FenceResponse;
 import com.gxdcnjq.sharedbikesmis.entity.Response;
 import com.gxdcnjq.sharedbikesmis.ui.bluetooth.BluetoothActivity;
 import com.gxdcnjq.sharedbikesmis.ui.mine.PersonalCenterActivity;
@@ -61,6 +63,7 @@ import com.gxdcnjq.sharedbikesmis.ui.repair.RepairActivity;
 import com.gxdcnjq.sharedbikesmis.utils.OKHttpUtil;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -153,7 +156,6 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
 
         //初始化地图
         initMap(savedInstanceState);
-
         //初始化定位
         initLocation();
 
@@ -251,6 +253,7 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
         //初始化定位
         initLocation();
         refreshBike();
+        setFence();
         refreshCurrentBike();
         //在Fragment执行onResume时执行mMapView.onResume ()，重新绘制加载地图
         mapView.onResume();
@@ -403,7 +406,6 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
         mapView.onCreate(savedInstanceState);
         //初始化地图控制器对象
         aMap = mapView.getMap();
-        setFence();
 
         // 给地图设置标记点点击事件监听器
         aMap.setOnMarkerClickListener(this);
@@ -432,7 +434,6 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
         myLocationStyle.radiusFillColor(Color.argb(100, 33, 150, 243));
         // 设置定位蓝点的Style
         aMap.setMyLocationStyle(myLocationStyle);
-
 
 
         //设置最小缩放等级为16 ，缩放级别范围为[3, 20]
@@ -632,7 +633,6 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
                                         .snippet(macAddress)
                                         .icon(customIcon))
                                 .setClickable(true);
-                        setFence();
 
                     }
                 } catch (Exception e) {
@@ -641,6 +641,54 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
                 }
             } else {
                 Toast.makeText(this, bikesData.getMsg(), Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            Toast.makeText(this, "服务器连接超时", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * 获取围栏信息
+     */
+    public void setFence() {
+        String res = OKHttpUtil.getSyncRequest(ApiConstants.BASE_URL_HTTP, "fence", "list");
+        if (res != null) {
+            // 使用 Gson 解析 JSON
+            Gson gson = new Gson();
+
+            FenceResponse fenceResponse = gson.fromJson(res, FenceResponse.class);
+            if (fenceResponse.getCode().equals("0")) {
+                // 访问解析后的数据
+                List<FenceData> fenceDataList = fenceResponse.getData();
+                try {
+                    //添加围栏
+                    for (FenceData fenceData : fenceDataList) {
+                        String fencePoints = fenceData.getFence_points();
+                        JSONArray pointsArray = new JSONArray(fencePoints);
+                        List<LatLng> latLngs = new ArrayList<>();
+                        for (int j = 0; j < pointsArray.length(); j++) {
+                            JSONObject pointObject = pointsArray.getJSONObject(j);
+                            double latitude = pointObject.getDouble("lat");
+                            double longitude = pointObject.getDouble("lng");
+                            latLngs.add(new LatLng(latitude, longitude));
+                        }
+
+                        // 创建电子围栏的多边形选项
+                        PolygonOptions polygonOptions = new PolygonOptions();
+                        polygonOptions.addAll(latLngs);
+                        polygonOptions.strokeWidth(5); // 设置边框宽度
+                        polygonOptions.strokeColor(Color.argb(100, 33, 150, 243)); // 设置边框颜色
+                        polygonOptions.fillColor(Color.argb(100, 33, 150, 243)); // 设置填充颜色
+
+                        // 将电子围栏添加到地图上
+                        aMap.addPolygon(polygonOptions);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "数据解析错误", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, fenceResponse.getMsg(), Toast.LENGTH_SHORT).show();
             }
         }else {
             Toast.makeText(this, "服务器连接超时", Toast.LENGTH_SHORT).show();
@@ -920,29 +968,29 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
         colorAnimator2.start();
     }
 
-    /**
-     * 电子围栏
-     */
-    private void setFence() {
-        // 构造电子围栏区域的坐标点列表
-        List<LatLng> points = new ArrayList<>();
-        points.add(new LatLng(39.951776, 116.344154));
-        points.add(new LatLng(39.952121, 116.346149));
-        points.add(new LatLng(39.95141, 116.346332));
-        points.add(new LatLng(39.951529, 116.347249));
-        points.add(new LatLng(39.950896, 116.34742));
-        points.add(new LatLng(39.950456, 116.344642));
-
-        // 创建多边形选项对象，并设置填充颜色和透明度
-        PolygonOptions options = new PolygonOptions()
-                .addAll(points)
-                .fillColor(Color.parseColor("#50FF0000")) // 设置填充颜色，#80表示透明度50%
-                .strokeWidth(10) // 设置边框宽度
-                .strokeColor(Color.parseColor("#FF0000")); // 设置边框颜色
-
-        // 添加多边形到地图上
-        fencePolygon = aMap.addPolygon(options);
-    }
+//    /**
+//     * 电子围栏
+//     */
+//    private void setFence() {
+//        // 构造电子围栏区域的坐标点列表
+//        List<LatLng> points = new ArrayList<>();
+//        points.add(new LatLng(39.951776, 116.344154));
+//        points.add(new LatLng(39.952121, 116.346149));
+//        points.add(new LatLng(39.95141, 116.346332));
+//        points.add(new LatLng(39.951529, 116.347249));
+//        points.add(new LatLng(39.950896, 116.34742));
+//        points.add(new LatLng(39.950456, 116.344642));
+//
+//        // 创建多边形选项对象，并设置填充颜色和透明度
+//        PolygonOptions options = new PolygonOptions()
+//                .addAll(points)
+//                .fillColor(Color.parseColor("#50FF0000")) // 设置填充颜色，#80表示透明度50%
+//                .strokeWidth(10) // 设置边框宽度
+//                .strokeColor(Color.parseColor("#FF0000")); // 设置边框颜色
+//
+//        // 添加多边形到地图上
+//        fencePolygon = aMap.addPolygon(options);
+//    }
 
     private boolean isPointInFence(LatLng point) {
         // 电子围栏的边界点列表

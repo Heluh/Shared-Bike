@@ -30,4 +30,10 @@ public class BikeController {
         return R.ok();
     }
 
+    @PostMapping("/lock")
+    public R lock(Integer id) {
+        bikeService.lock(id);
+        return R.ok();
+    }
+
 }
