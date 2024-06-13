@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.androidend.mapper.BikeMapper">
+
+    <!-- 列出所有的共享单车 -->
+    <select id="findAll" resultType="com.example.androidend.entity.Bike">
+        SELECT * FROM bike
+    </select>
+
+    <!-- 开锁 -->
+    <update id="unlock" parameterType="com.example.androidend.entity.Bike">
+        UPDATE bike SET status = 1 WHERE id = #{id}
+    </update>
+</mapper>

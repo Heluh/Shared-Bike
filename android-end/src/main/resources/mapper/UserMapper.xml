@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.androidend.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.example.androidend.entity.User">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="email" property="email" />
+        <result column="phone" property="phone" />
+        <result column="avatar" property="avatar" />
+    </resultMap>
+
+    <insert id="insertUser" parameterType="com.example.androidend.entity.User">
+        INSERT INTO appuser (username, password, phone, avatar)
+        VALUES (#{username}, #{password}, #{phone}, #{avatar})
+    </insert>
+
+    <select id="selectUserById" parameterType="int" resultMap="BaseResultMap">
+        SELECT * FROM appuser WHERE id = #{id}
+    </select>
+
+    <select id="selectUserByUsername" parameterType="String" resultMap="BaseResultMap">
+        SELECT * FROM appuser WHERE username = #{username}
+    </select>
+
+    <update id="updateUser" parameterType="com.example.androidend.entity.User">
+        UPDATE appuser SET
+                           username = #{username},
+                           password = #{password},
+                           phone = #{phone},
+                           avatar = #{avatar}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM appuser WHERE id = #{id}
+    </delete>
+
+</mapper>

@@ -17,7 +17,7 @@ public class Bike {
     private String bikeNumber;
 
     @Schema(description ="状态")
-    private String status;
+    private Integer status;
 
     @Schema(description ="经度")
     private double longitude;

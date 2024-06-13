@@ -16,9 +16,9 @@ spring:
     max-active: 20
     max-idle: 8
     min-idle: 8
-
-  resources:
-    static-locations: classpath:/static/
+  web:
+    resources:
+      static-locations: classpath:/static/
 
 mybatis:
   mapper-locations: classpath:mappers/*.xml

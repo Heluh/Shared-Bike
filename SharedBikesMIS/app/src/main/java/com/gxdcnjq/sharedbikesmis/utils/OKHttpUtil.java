@@ -94,7 +94,7 @@ public class OKHttpUtil {
 
             // 根据你的实际需求，添加 Token 头部到请求中
             Request modifiedRequest = originalRequest.newBuilder()
-                    .header("token", token)
+                    .header("Authorization", "Bearer " + token)
                     .build();
 
             // 继续执行请求链，并返回响应
@@ -310,8 +310,66 @@ public class OKHttpUtil {
             return null;
         }
     }
+    public static String postSyncRequestParams(String url, Map<String,String> params, String... args) {
+        List<String> result = new ArrayList<>();
+        StringBuilder address = new StringBuilder(url);
+        for (String arg : args) {
+            address.append("/").append(arg);
+        }
 
-    /**
+        final String finalAddress = address.toString();
+
+        Log.d("pan",finalAddress);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                client = getInstance();
+                Log.d("同步 POST 请求地址：", finalAddress);
+                FormBody.Builder formBody = new FormBody.Builder();
+                // Adding formBody parameters
+                for (Map.Entry<String, String> entry : params.entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                    formBody.add(key, value);
+                }
+
+                request = new Request.Builder()
+                        .url(finalAddress)
+                        .post(formBody.build())
+                        .addHeader("device-platform", "android")
+                        .build();
+                try {
+                    Response response = client.newCall(request).execute();
+                    String res = response.body().string();
+                    result.add(res);
+                    Log.d("HttpUtil", "同步 POST 请求成功！");
+                    Log.d("请求对象：", res);
+                } catch (Exception e) {
+                    Log.d("HttpUtil", "同步 POST 请求失败！");
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        // Waiting for the result to return
+        int count = 0;
+        while (result.size() == 0 && count < 300) {
+            try {
+                TimeUnit.MILLISECONDS.sleep(10); // Wait for 10 milliseconds
+                count++;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (count < 300) {
+            return result.get(0);
+        } else {
+            Log.d("HttpUtil", "等待返回值超时");
+            return null;
+        }
+    }    /**
      * 同步Post请求，queryParam传查询参数，formDataParams传表单参数。支持文件上传
      *
      * @param url         基本请求地址，例如：http://127.0.0.1:8081

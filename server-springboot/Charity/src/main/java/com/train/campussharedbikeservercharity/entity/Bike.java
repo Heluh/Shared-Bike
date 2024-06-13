@@ -8,7 +8,7 @@ import java.util.Date;
 public class Bike {
     private int id;
     private String bikeNumber;
-    private String status;
+    private Integer status;
     private double longitude;
     private double latitude;
     private Date createTime;

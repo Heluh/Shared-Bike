@@ -297,9 +297,6 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
         };
 
         if (EasyPermissions.hasPermissions(this, permissions)) {
-            //true 有权限 开始定位
-            Toast.makeText(this, "已获得权限，可以定位啦！", Toast.LENGTH_SHORT).show();
-
             //启动定位
             mLocationClient.startLocation();
         } else {
@@ -604,7 +601,7 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
             Gson gson = new Gson();
 
             BikesData bikesData = gson.fromJson(res, BikesData.class);
-            if (bikesData.getCode().equals("200")) {
+            if (bikesData.getCode().equals("0")) {
                 // 访问解析后的数据
                 String code = bikesData.getCode();
                 String msg = bikesData.getMsg();
@@ -612,17 +609,14 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
                 try {
                     //添加标记点
                     for (Bike bike : bikes) {
-                        String macAddress = bike.getBikeMac();
+                        String macAddress = bike.getBikeNumber();
                         String alias = "BJTU共享单车";
                         if(MacConstants.getNameByMacAddress(macAddress)!=null){
                             alias = MacConstants.getNameByMacAddress(macAddress);
                         }
-                        String location = bike.getLocation();
-                        // 去除方括号并按逗号分隔字符串
-                        String[] parts = location.replaceAll("[\\[\\]]", "").split(",");
-                        // 解析经度和纬度
-                        double latitude = Double.parseDouble(parts[0].trim());
-                        double longitude = Double.parseDouble(parts[1].trim());
+
+                        double latitude = bike.getLatitude();
+                        double longitude = bike.getLongitude();
                         Log.d("Pan",String.valueOf(latitude));
                         Log.d("Pan",String.valueOf(longitude));
                         // 添加标记点
@@ -697,12 +691,11 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
      * 开锁
      */
     public void unlock(String bikeMac, double latitude, double longitude) {
-        String locationStr = "[" + latitude + "," + longitude + "]";
         Map<String, String> queryParams = new HashMap<>();
         Map<String, String> formDataParams = new HashMap<>();
-        formDataParams.put("bikeMac", bikeMac);
-        formDataParams.put("position", locationStr);
-        Log.d("Pan",locationStr);
+        formDataParams.put("bikeNumber", bikeMac);
+        formDataParams.put("latitude", String.valueOf(latitude));
+        formDataParams.put("longitude", String.valueOf(longitude));
         String res = OKHttpUtil.postSyncRequestFormData(ApiConstants.BASE_URL_HTTP, queryParams, formDataParams, "bikes", "unlock");
         if (res != null) {
             Log.d("Pan", res);
@@ -710,7 +703,7 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
             Gson gson = new Gson();
             try {
                 Response response = gson.fromJson(res, Response.class);
-                if (response.getCode().equals("200")) {
+                if (response.getCode().equals("0")) {
                     Toast.makeText(this, "开锁成功", Toast.LENGTH_SHORT).show();
                     //TODO:禁止其他按钮操作
                     //开始定时上报位置

@@ -1,14 +1,24 @@
-package com.train.campussharedbikeserver.bean;
+package com.example.androidend.entity;
+
 import lombok.Data;
+
 
 @Data
 public class Bike {
-    private int id;
-    private String bikeNum;
-    private Integer status;
+
+    private Integer id;
+
+    private String bikeNumber;
+
+    private String status;
+
     private double longitude;
+
     private double latitude;
-    private String create_time;
+
+    private String createTime;
+
     private String lastUpdateTime;
+
     private int fenceId;
 }

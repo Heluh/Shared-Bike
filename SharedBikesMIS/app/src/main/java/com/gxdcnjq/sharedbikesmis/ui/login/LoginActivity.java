@@ -25,6 +25,7 @@ import com.gxdcnjq.sharedbikesmis.ui.register.RegisterActivity;
 import com.gxdcnjq.sharedbikesmis.utils.OKHttpUtil;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -98,13 +99,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String password = et_password.getText().toString();
             UserForLogin userForLogin = new UserForLogin(username, password);
             Gson gson = new Gson();
-            String json = gson.toJson(userForLogin);
-            Log.d("Pan",json);
-            String res = OKHttpUtil.postSyncRequestJson(ApiConstants.BASE_URL_HTTP, new HashMap<>(), json, "user", "login");//服务器传回的json字符串
+            Map<String, String> params = new HashMap<>();
+            params.put("username", username);
+            params.put("password", password);
+            String res = OKHttpUtil.postSyncRequestParams(ApiConstants.BASE_URL_HTTP, params, "user", "login");
             if (res != null) {
                 // 使用 Gson 解析 JSON
                 LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
-                if (loginResponse.getCode().equals("200")) {
+                if (loginResponse.getCode().equals("0")) {
                     Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
                     String token = loginResponse.getData().getToken();
                     OKHttpUtil.setToken(token);

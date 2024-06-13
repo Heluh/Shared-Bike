@@ -102,7 +102,7 @@ public class CharityServiceImpl implements CharityService {
         String bikeNumber = dateFormat.format(currentTime);
 
         bike.setBikeNumber(bikeNumber + bikeId);
-        bike.setStatus("未使用");
+        bike.setStatus(0);
         bike.setLongitude(0.0);
         bike.setLatitude(0.0);
         bike.setFenceId(fenceId);
