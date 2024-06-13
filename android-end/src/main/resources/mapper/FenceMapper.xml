@@ -7,4 +7,7 @@
         select * from fence
     </select>
 
+    <select id="getFenceById" resultType="com.example.androidend.entity.Fence">
+        select * from fence where id = #{id}
+    </select>
 </mapper>

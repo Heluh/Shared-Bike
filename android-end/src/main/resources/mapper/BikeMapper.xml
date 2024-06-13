@@ -8,6 +8,11 @@
         SELECT * FROM bike
     </select>
 
+    <!-- 根据bikeNumber查找共享单车 -->
+    <select id="findBikeByNumber" resultType="com.example.androidend.entity.Bike">
+        SELECT * FROM bike WHERE bikeNumber = #{bikeNumber}
+    </select>
+
     <!-- 开锁 -->
     <update id="unlock" parameterType="com.example.androidend.entity.Bike">
         UPDATE bike SET status = 1 WHERE id = #{id}
@@ -15,6 +20,6 @@
 
     <!-- 关锁 -->
     <update id="lock" parameterType="com.example.androidend.entity.Bike">
-        UPDATE bike SET status = 0 WHERE id = #{id}
+        UPDATE bike SET status = 0 WHERE bikeNumber = #{bikeNumber}
     </update>
 </mapper>

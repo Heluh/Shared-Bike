@@ -444,7 +444,6 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
         // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.setMyLocationEnabled(true);
 
-
     }
 
     /**
@@ -591,6 +590,26 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
         isMenuOpen = false;
     }
 
+    public static double[] bd09ToWgs84(double bdLon, double bdLat) {
+        double[] wgs84 = new double[2];
+        double x = bdLon - 0.0065, y = bdLat - 0.006;
+        double z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * Math.PI);
+        double theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * Math.PI);
+        wgs84[0] = z * Math.cos(theta);
+        wgs84[1] = z * Math.sin(theta);
+        return wgs84;
+    }
+
+    public static double[] wgs84ToBd09(double wgLon, double wgLat) {
+        double[] bd09 = new double[2];
+        double x = wgLon, y = wgLat;
+        double z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * Math.PI);
+        double theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * Math.PI);
+        bd09[0] = z * Math.cos(theta) + 0.0065;
+        bd09[1] = z * Math.sin(theta) + 0.006;
+        return bd09;
+    }
+
     /**
      * 刷新当前可用单车
      */
@@ -616,8 +635,12 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
                             alias = MacConstants.getNameByMacAddress(macAddress);
                         }
 
-                        double latitude = bike.getLatitude();
-                        double longitude = bike.getLongitude();
+                        double bdLatitude = bike.getLatitude();
+                        double bdLongitude = bike.getLongitude();
+                        //将百度地图的经纬度转换为高德地图的经纬度
+                        double[] wgs84 = bd09ToWgs84(bdLongitude, bdLatitude);
+                        double longitude = wgs84[0];
+                        double latitude = wgs84[1];
                         Log.d("Pan",String.valueOf(latitude));
                         Log.d("Pan",String.valueOf(longitude));
                         // 添加标记点
@@ -668,17 +691,28 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
                         List<LatLng> latLngs = new ArrayList<>();
                         for (int j = 0; j < pointsArray.length(); j++) {
                             JSONObject pointObject = pointsArray.getJSONObject(j);
-                            double latitude = pointObject.getDouble("lat");
-                            double longitude = pointObject.getDouble("lng");
+                            double bdLatitude = pointObject.getDouble("lat");
+                            double bdLongitude = pointObject.getDouble("lng");
+                            //将百度地图的经纬度转换为高德地图的经纬度
+                            double[] wgs84 = bd09ToWgs84(bdLongitude, bdLatitude);
+                            double longitude = wgs84[0];
+                            double latitude = wgs84[1];
                             latLngs.add(new LatLng(latitude, longitude));
                         }
 
                         // 创建电子围栏的多边形选项
                         PolygonOptions polygonOptions = new PolygonOptions();
                         polygonOptions.addAll(latLngs);
-                        polygonOptions.strokeWidth(5); // 设置边框宽度
-                        polygonOptions.strokeColor(Color.argb(100, 33, 150, 243)); // 设置边框颜色
-                        polygonOptions.fillColor(Color.argb(100, 33, 150, 243)); // 设置填充颜色
+                        if(fenceData.getType()==1){
+                            polygonOptions.strokeWidth(5); // 设置边框宽度
+                            polygonOptions.strokeColor(Color.argb(100, 33, 150, 243)); // 设置边框颜色
+                            polygonOptions.fillColor(Color.argb(100, 33, 150, 243)); // 设置填充颜色
+                        }else{
+                            polygonOptions.strokeWidth(2); // 设置边框宽度
+                            polygonOptions.strokeColor(Color.argb(100, 255, 0, 0)); // 设置边框颜色
+                            polygonOptions.fillColor(Color.argb(100, 255, 0, 0)); // 设置填充颜色
+                        }
+
 
                         // 将电子围栏添加到地图上
                         aMap.addPolygon(polygonOptions);
@@ -746,7 +780,6 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
         formDataParams.put("longitude", String.valueOf(longitude));
         String res = OKHttpUtil.postSyncRequestFormData(ApiConstants.BASE_URL_HTTP, queryParams, formDataParams, "bikes", "unlock");
         if (res != null) {
-            Log.d("Pan", res);
             // 使用 Gson 解析 JSON
             Gson gson = new Gson();
             try {
@@ -807,13 +840,14 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
      * 关锁
      */
     public void lock(String bikeMac, double latitude, double longitude) {
-        String locationStr = "[" + latitude + "," + longitude + "]";
         Map<String, String> queryParams = new HashMap<>();
         Map<String, String> formDataParams = new HashMap<>();
-        formDataParams.put("bikeMac", bikeMac);
-        formDataParams.put("position", locationStr);
-        formDataParams.put("isNoParkingPlace", "false");
-        Log.d("Pan",locationStr);
+        double[] bd09 = wgs84ToBd09(longitude, latitude);
+        double bdLongitude = bd09[0];
+        double bdLatitude = bd09[1];
+        formDataParams.put("bikeNumber", bikeMac);
+        formDataParams.put("longitude", String.valueOf(bdLongitude));
+        formDataParams.put("latitude", String.valueOf(bdLatitude));
         String res = OKHttpUtil.postSyncRequestFormData(ApiConstants.BASE_URL_HTTP, queryParams, formDataParams, "bikes", "lock");
         if (res != null) {
             Log.d("Pan", res);

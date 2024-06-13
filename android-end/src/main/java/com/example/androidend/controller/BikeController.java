@@ -31,9 +31,13 @@ public class BikeController {
     }
 
     @PostMapping("/lock")
-    public R lock(Integer id) {
-        bikeService.lock(id);
-        return R.ok();
+    public R lock(String bikeNumber, Double longitude, Double latitude) {
+        if(bikeService.canReturnBike(bikeNumber, longitude, latitude)){
+            bikeService.lock(bikeNumber);
+            return R.ok();
+        }else{
+            return R.error("Bike not in fence");
+        }
     }
 
 }

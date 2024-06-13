@@ -10,7 +10,9 @@ import java.util.List;
 public interface BikeMapper {
     List<Bike> findAll();
 
+    Bike findBikeByNumber(String bikeNumber);
+
     void unlock(Integer id);
 
-    void lock(Integer id);
+    void lock(String bikeNumber);
 }

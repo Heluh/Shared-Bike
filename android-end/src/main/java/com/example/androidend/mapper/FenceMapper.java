@@ -9,4 +9,6 @@ import java.util.List;
 public interface FenceMapper {
     List<Fence> getFenceList();
 
+    Fence getFenceById(int id);
+
 }
