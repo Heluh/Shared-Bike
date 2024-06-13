@@ -789,7 +789,7 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
             Gson gson = new Gson();
             try {
                 Response response = gson.fromJson(res, Response.class);
-                if (response.getCode().equals("200")) {
+                if (response.getCode().equals("0")) {
 //                    Toast.makeText(this, "上传成功", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, response.getMsg(), Toast.LENGTH_SHORT).show();
@@ -821,7 +821,7 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
             Gson gson = new Gson();
             try {
                 Response response = gson.fromJson(res, Response.class);
-                if (response.getCode().equals("200")) {
+                if (response.getCode().equals("0")) {
                     Toast.makeText(this, "关锁成功", Toast.LENGTH_SHORT).show();
                     //TODO:允许其他按钮操作
                     unlock = false;

@@ -1,135 +1,154 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 实训大三下
+ Source Server         : Mysql8.1
  Source Server Type    : MySQL
- Source Server Version : 50718
- Source Host           : bj-cynosdbmysql-grp-1n9oj5ju.sql.tencentcdb.com:28817
+ Source Server Version : 80100
+ Source Host           : localhost:3306
  Source Schema         : shared_bike
 
  Target Server Type    : MySQL
- Target Server Version : 50718
+ Target Server Version : 80100
  File Encoding         : 65001
 
- Date: 23/06/2023 14:39:00
+ Date: 13/06/2024 13:45:20
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
+-- Table structure for appuser
+-- ----------------------------
+DROP TABLE IF EXISTS `appuser`;
+CREATE TABLE `appuser`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`id`, `username`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of appuser
+-- ----------------------------
+INSERT INTO `appuser` VALUES (1, '123', '123', NULL, NULL);
+INSERT INTO `appuser` VALUES (2, '1234', '$2a$10$p59pawzhROtD7D35eA1pHeqwJdOyz4K.on/cqLgXSLujvDjmiGM9S', NULL, NULL);
+
+-- ----------------------------
 -- Table structure for bike
 -- ----------------------------
 DROP TABLE IF EXISTS `bike`;
 CREATE TABLE `bike`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `bikeNumber` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `status` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '未使用',
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `bikeNumber` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `status` int(20) UNSIGNED ZEROFILL NOT NULL DEFAULT 00000000000000000000,
   `longitude` decimal(10, 6) NOT NULL,
   `latitude` decimal(10, 6) NOT NULL,
   `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `lastUpdateTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `fenceId` bigint(20) NULL DEFAULT NULL,
+  `fenceId` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `fk_fence_id`(`fenceId`) USING BTREE,
+  INDEX `fk_fence_id`(`fenceId` ASC) USING BTREE,
   CONSTRAINT `fk_fence_id` FOREIGN KEY (`fenceId`) REFERENCES `fence` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of bike
 -- ----------------------------
-INSERT INTO `bike` VALUES (1, '4343-3232-3234-343', '未使用', 116.351378, 39.957623, '2023-05-20 14:57:18', '2023-05-20 14:57:18', 5);
-INSERT INTO `bike` VALUES (4, '2222-2222-2222-22', '未使用', 116.347048, 39.957322, '2023-06-06 00:00:00', '2023-06-06 00:00:00', 8);
-INSERT INTO `bike` VALUES (13, '2023-0619-1539-490', '未使用', 116.347187, 39.957343, '2023-06-19 15:39:49', '2023-06-19 15:39:49', 8);
-INSERT INTO `bike` VALUES (15, '2023-1111-3333', '未使用', 116.351073, 39.957547, '2023-06-14 20:52:49', '2023-06-21 20:52:56', 5);
-INSERT INTO `bike` VALUES (16, '1543-1868-8888', '未使用', 116.351800, 39.957699, '2023-06-14 20:54:15', '2023-06-20 20:54:19', 5);
-INSERT INTO `bike` VALUES (17, '2954-3276-52', '未使用', 116.348616, 39.955749, '2023-06-21 21:00:28', '2023-06-21 21:00:28', 9);
-INSERT INTO `bike` VALUES (18, '2345-7888-8888', '未使用', 116.344587, 39.956645, '2023-06-21 21:01:54', '2023-06-21 21:01:54', 11);
-INSERT INTO `bike` VALUES (19, '2344-4444-4444', '未使用', 116.344785, 39.956617, '2023-06-21 21:02:36', '2023-06-21 21:02:36', 11);
-INSERT INTO `bike` VALUES (20, '1324-3232-3232', '未使用', 116.344793, 39.956596, '2023-06-21 21:03:29', '2023-06-21 21:03:29', 11);
-INSERT INTO `bike` VALUES (21, '1233-2123-4555', '未使用', 116.345198, 39.957502, '2023-06-21 21:05:41', '2023-06-21 21:05:41', 6);
-INSERT INTO `bike` VALUES (22, '2333-3333-3333', '未使用', 116.345234, 39.957433, '2023-06-21 21:06:44', '2023-06-21 21:06:44', 6);
-INSERT INTO `bike` VALUES (23, '1654-3546-6666', '未使用', 116.343455, 39.957232, '2023-06-21 21:08:33', '2023-06-21 21:08:33', 7);
-INSERT INTO `bike` VALUES (24, '2337-7777-777', '未使用', 116.343446, 39.957219, '2023-06-21 21:09:10', '2023-06-21 21:09:10', 7);
-INSERT INTO `bike` VALUES (25, '5454-5333-333', '未使用', 116.343662, 39.957253, '2023-06-21 21:09:48', '2023-06-21 21:09:48', 7);
-INSERT INTO `bike` VALUES (26, '7776-6666-6666', '未使用', 116.348158, 39.955425, '2023-06-21 21:15:07', '2023-06-21 21:15:07', 10);
-INSERT INTO `bike` VALUES (27, '5656-5555-5555', '未使用', 116.348274, 39.955276, '2023-06-21 21:15:53', '2023-06-21 21:15:53', 10);
-INSERT INTO `bike` VALUES (28, '1477-6767-6767', '使用中', 116.347794, 39.956738, '2023-06-21 21:17:33', '2023-06-21 21:17:33', 3);
-INSERT INTO `bike` VALUES (29, '4533-3333-3333', '使用中', 116.346702, 39.955324, '2023-06-21 21:18:39', '2023-06-21 21:18:39', 3);
-INSERT INTO `bike` VALUES (30, '3456-7444-4444', '使用中', 116.353233, 39.953416, '2023-06-21 21:19:42', '2023-06-21 21:19:42', 4);
-INSERT INTO `bike` VALUES (32, '2023062311204342710', '未使用', 0.000000, 0.000000, '2023-06-23 11:20:43', '2023-06-23 11:20:43', 6);
-INSERT INTO `bike` VALUES (33, '222', '未使用', 212.000000, 212.000000, '2023-06-23 14:09:04', '2023-06-23 14:09:06', 5);
-INSERT INTO `bike` VALUES (34, '2023062314102265911', '未使用', 0.000000, 0.000000, '2023-06-23 14:10:23', '2023-06-23 14:10:23', 6);
+INSERT INTO `bike` VALUES (1, '4343-3232-3234-343', 00000000000000000000, 116.351378, 39.957623, '2023-05-20 14:57:18', '2023-05-20 14:57:18', 5);
+INSERT INTO `bike` VALUES (4, '2222-2222-2222-22', 00000000000000000000, 116.347048, 39.957322, '2023-06-06 00:00:00', '2023-06-06 00:00:00', 8);
+INSERT INTO `bike` VALUES (13, '2023-0619-1539-490', 00000000000000000000, 116.347187, 39.957343, '2023-06-19 15:39:49', '2023-06-19 15:39:49', 8);
+INSERT INTO `bike` VALUES (15, '2023-1111-3333', 00000000000000000000, 116.351073, 39.957547, '2023-06-14 20:52:49', '2023-06-21 20:52:56', 5);
+INSERT INTO `bike` VALUES (16, '1543-1868-8888', 00000000000000000000, 116.351800, 39.957699, '2023-06-14 20:54:15', '2023-06-20 20:54:19', 5);
+INSERT INTO `bike` VALUES (17, '2954-3276-52', 00000000000000000000, 116.348616, 39.955749, '2023-06-21 21:00:28', '2023-06-21 21:00:28', 9);
+INSERT INTO `bike` VALUES (18, '2345-7888-8888', 00000000000000000000, 116.344587, 39.956645, '2023-06-21 21:01:54', '2023-06-21 21:01:54', 11);
+INSERT INTO `bike` VALUES (19, '2344-4444-4444', 00000000000000000000, 116.344785, 39.956617, '2023-06-21 21:02:36', '2023-06-21 21:02:36', 11);
+INSERT INTO `bike` VALUES (20, '1324-3232-3232', 00000000000000000000, 116.344793, 39.956596, '2023-06-21 21:03:29', '2023-06-21 21:03:29', 11);
+INSERT INTO `bike` VALUES (21, '1233-2123-4555', 00000000000000000000, 116.345198, 39.957502, '2023-06-21 21:05:41', '2023-06-21 21:05:41', 6);
+INSERT INTO `bike` VALUES (22, '2333-3333-3333', 00000000000000000000, 116.345234, 39.957433, '2023-06-21 21:06:44', '2023-06-21 21:06:44', 6);
+INSERT INTO `bike` VALUES (23, '1654-3546-6666', 00000000000000000000, 116.343455, 39.957232, '2023-06-21 21:08:33', '2023-06-21 21:08:33', 7);
+INSERT INTO `bike` VALUES (24, '2337-7777-777', 00000000000000000000, 116.343446, 39.957219, '2023-06-21 21:09:10', '2023-06-21 21:09:10', 7);
+INSERT INTO `bike` VALUES (25, '5454-5333-333', 00000000000000000000, 116.343662, 39.957253, '2023-06-21 21:09:48', '2023-06-21 21:09:48', 7);
+INSERT INTO `bike` VALUES (26, '7776-6666-6666', 00000000000000000000, 116.348158, 39.955425, '2023-06-21 21:15:07', '2023-06-21 21:15:07', 10);
+INSERT INTO `bike` VALUES (27, '5656-5555-5555', 00000000000000000000, 116.348274, 39.955276, '2023-06-21 21:15:53', '2023-06-21 21:15:53', 10);
+INSERT INTO `bike` VALUES (28, '1477-6767-6767', 00000000000000000001, 116.347794, 39.956738, '2023-06-21 21:17:33', '2023-06-21 21:17:33', 3);
+INSERT INTO `bike` VALUES (29, '4533-3333-3333', 00000000000000000001, 116.346702, 39.955324, '2023-06-21 21:18:39', '2023-06-21 21:18:39', 3);
+INSERT INTO `bike` VALUES (30, '3456-7444-4444', 00000000000000000001, 116.353233, 39.953416, '2023-06-21 21:19:42', '2023-06-21 21:19:42', 4);
+INSERT INTO `bike` VALUES (32, '2023062311204342710', 00000000000000000000, 0.000000, 0.000000, '2023-06-23 11:20:43', '2023-06-23 11:20:43', 6);
+INSERT INTO `bike` VALUES (33, '222', 00000000000000000000, 212.000000, 212.000000, '2023-06-23 14:09:04', '2023-06-23 14:09:06', 5);
+INSERT INTO `bike` VALUES (34, '2023062314102265911', 00000000000000000000, 0.000000, 0.000000, '2023-06-23 14:10:23', '2023-06-23 14:10:23', 6);
 
 -- ----------------------------
--- Table structure for bikeFromCharity
+-- Table structure for bikefromcharity
 -- ----------------------------
-DROP TABLE IF EXISTS `bikeFromCharity`;
-CREATE TABLE `bikeFromCharity`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `charity_event_id` int(11) NOT NULL,
-  `bind_bike_id` int(11) NULL DEFAULT NULL,
-  `bike_type` tinyint(4) NOT NULL COMMENT '车辆类型 0 普通车 1 公路车 2 山地车',
+DROP TABLE IF EXISTS `bikefromcharity`;
+CREATE TABLE `bikefromcharity`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `charity_event_id` int NOT NULL,
+  `bind_bike_id` int NULL DEFAULT NULL,
+  `bike_type` tinyint NOT NULL COMMENT '车辆类型 0 普通车 1 公路车 2 山地车',
   `in_time` datetime NULL DEFAULT NULL COMMENT '入库时间',
   `bind_use_time` datetime NULL DEFAULT NULL COMMENT '投入使用时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `charity_fore_id`(`charity_event_id`) USING BTREE,
-  CONSTRAINT `charity_fore_id` FOREIGN KEY (`charity_event_id`) REFERENCES `charityEvent` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  INDEX `charity_fore_id`(`charity_event_id` ASC) USING BTREE,
+  CONSTRAINT `charity_fore_id` FOREIGN KEY (`charity_event_id`) REFERENCES `charityevent` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of bikeFromCharity
+-- Records of bikefromcharity
 -- ----------------------------
-INSERT INTO `bikeFromCharity` VALUES (7, 1, 1, NULL, 1, '2023-06-19 15:39:34', NULL);
-INSERT INTO `bikeFromCharity` VALUES (8, 1, 2, 13, 3, '2023-06-19 15:39:38', '2023-06-19 15:39:50');
-INSERT INTO `bikeFromCharity` VALUES (9, 1, 2, NULL, 0, '2023-06-19 15:39:44', NULL);
-INSERT INTO `bikeFromCharity` VALUES (10, 2, 2, 32, 2, '2023-06-23 11:20:32', '2023-06-23 11:20:43');
-INSERT INTO `bikeFromCharity` VALUES (11, 2, 1, 34, 0, '2023-06-23 14:10:14', '2023-06-23 14:10:22');
+INSERT INTO `bikefromcharity` VALUES (7, 1, 1, NULL, 1, '2023-06-19 15:39:34', NULL);
+INSERT INTO `bikefromcharity` VALUES (8, 1, 2, 13, 3, '2023-06-19 15:39:38', '2023-06-19 15:39:50');
+INSERT INTO `bikefromcharity` VALUES (9, 1, 2, NULL, 0, '2023-06-19 15:39:44', NULL);
+INSERT INTO `bikefromcharity` VALUES (10, 2, 2, 32, 2, '2023-06-23 11:20:32', '2023-06-23 11:20:43');
+INSERT INTO `bikefromcharity` VALUES (11, 2, 1, 34, 0, '2023-06-23 14:10:14', '2023-06-23 14:10:22');
 
 -- ----------------------------
--- Table structure for charityEvent
+-- Table structure for charityevent
 -- ----------------------------
-DROP TABLE IF EXISTS `charityEvent`;
-CREATE TABLE `charityEvent`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '捐赠活动id',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '捐赠活动名称',
+DROP TABLE IF EXISTS `charityevent`;
+CREATE TABLE `charityevent`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '捐赠活动id',
+  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '捐赠活动名称',
   `start_date` datetime NULL DEFAULT NULL COMMENT '捐赠活动开始日期',
   `end_date` datetime NULL DEFAULT NULL COMMENT '捐赠活动结束日期',
-  `last_forever` tinyint(4) NULL DEFAULT NULL COMMENT '是否为长期捐赠活动',
-  `receive_loc_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '指定线下接收地点名称',
-  `description` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `last_forever` tinyint NULL DEFAULT NULL COMMENT '是否为长期捐赠活动',
+  `receive_loc_name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '指定线下接收地点名称',
+  `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of charityEvent
+-- Records of charityevent
 -- ----------------------------
-INSERT INTO `charityEvent` VALUES (1, '长期捐赠通道', NULL, NULL, 1, '学活一层捐赠处', '供学生们长期开放的捐赠通道');
-INSERT INTO `charityEvent` VALUES (2, '2023届毕业生闲置自行车捐赠', '2023-06-01 16:49:12', '2023-07-08 16:49:14', 0, '学活一层捐赠处', '亲爱的2023届毕业生们，恭喜你们即将迈入新的人生阶段！在这个特殊的时刻，我们发起了【2023届毕业生闲置自行车捐赠】活动，旨在帮助毕业生们解决闲置自行车的困扰，并为有需要的人提供实用的交通工具。\n活动期间，我们诚邀所有2023届毕业生参与，将你们不再使用的自行车捐赠出来，让它们继续发挥作用，帮助其他人出行。这不仅是对环境的友好行动，也是对社会的爱心奉献。');
-INSERT INTO `charityEvent` VALUES (6, '11', '2023-06-23 14:09:55', '2023-06-23 14:09:56', 0, '11', '11');
+INSERT INTO `charityevent` VALUES (1, '长期捐赠通道', NULL, NULL, 1, '学活一层捐赠处', '供学生们长期开放的捐赠通道');
+INSERT INTO `charityevent` VALUES (2, '2023届毕业生闲置自行车捐赠', '2023-06-01 16:49:12', '2023-07-08 16:49:14', 0, '学活一层捐赠处', '亲爱的2023届毕业生们，恭喜你们即将迈入新的人生阶段！在这个特殊的时刻，我们发起了【2023届毕业生闲置自行车捐赠】活动，旨在帮助毕业生们解决闲置自行车的困扰，并为有需要的人提供实用的交通工具。\n活动期间，我们诚邀所有2023届毕业生参与，将你们不再使用的自行车捐赠出来，让它们继续发挥作用，帮助其他人出行。这不仅是对环境的友好行动，也是对社会的爱心奉献。');
+INSERT INTO `charityevent` VALUES (6, '11', '2023-06-23 14:09:55', '2023-06-23 14:09:56', 0, '11', '11');
 
 -- ----------------------------
 -- Table structure for fence
 -- ----------------------------
 DROP TABLE IF EXISTS `fence`;
 CREATE TABLE `fence`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `fence_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '围栏名称',
-  `capacity` int(11) NULL DEFAULT NULL COMMENT '围栏容量',
-  `current_num` int(11) NULL DEFAULT NULL COMMENT '单车投入量',
-  `area` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所在区域',
-  `fence_points` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '围栏点信息',
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `fence_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '围栏名称',
+  `capacity` int NULL DEFAULT NULL COMMENT '围栏容量',
+  `current_num` int NULL DEFAULT NULL COMMENT '单车投入量',
+  `area` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '所在区域',
+  `fence_points` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '围栏点信息',
   `create_date` date NULL DEFAULT NULL COMMENT '创建日期',
-  `type` tinyint(4) NULL DEFAULT NULL COMMENT '围栏类型 1 车辆运营区 2 指定停车区',
+  `type` tinyint NULL DEFAULT NULL COMMENT '围栏类型 1 车辆运营区 2 指定停车区',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of fence
 -- ----------------------------
 INSERT INTO `fence` VALUES (3, '交大主校区', 0, 0, '北京交通大学', '[{\"lng\":116.343584,\"lat\":39.958792},{\"lng\":116.343786,\"lat\":39.957942},{\"lng\":116.343,\"lat\":39.957786},{\"lng\":116.343135,\"lat\":39.957378},{\"lng\":116.343243,\"lat\":39.956887},{\"lng\":116.344002,\"lat\":39.957026},{\"lng\":116.344177,\"lat\":39.956642},{\"lng\":116.344541,\"lat\":39.956566},{\"lng\":116.344873,\"lat\":39.95648},{\"lng\":116.34512,\"lat\":39.956556},{\"lng\":116.345318,\"lat\":39.955902},{\"lng\":116.344478,\"lat\":39.955767},{\"lng\":116.345111,\"lat\":39.955249},{\"lng\":116.345592,\"lat\":39.9549},{\"lng\":116.345996,\"lat\":39.954686},{\"lng\":116.34623,\"lat\":39.954599},{\"lng\":116.34808,\"lat\":39.954831},{\"lng\":116.348192,\"lat\":39.954717},{\"lng\":116.348417,\"lat\":39.953922},{\"lng\":116.350101,\"lat\":39.954437},{\"lng\":116.349944,\"lat\":39.954831},{\"lng\":116.351125,\"lat\":39.955311},{\"lng\":116.352239,\"lat\":39.955875},{\"lng\":116.354395,\"lat\":39.9563},{\"lng\":116.354292,\"lat\":39.956639},{\"lng\":116.354458,\"lat\":39.956718},{\"lng\":116.354323,\"lat\":39.957112},{\"lng\":116.354395,\"lat\":39.957292},{\"lng\":116.354287,\"lat\":39.957541},{\"lng\":116.354265,\"lat\":39.957662},{\"lng\":116.353564,\"lat\":39.957541},{\"lng\":116.353411,\"lat\":39.958087},{\"lng\":116.353021,\"lat\":39.957838},{\"lng\":116.352338,\"lat\":39.957696},{\"lng\":116.352073,\"lat\":39.958495},{\"lng\":116.350546,\"lat\":39.958249},{\"lng\":116.350065,\"lat\":39.95929},{\"lng\":116.346418,\"lat\":39.958661},{\"lng\":116.346176,\"lat\":39.959228},{\"lng\":116.34358,\"lat\":39.958792}]', '2023-06-23', 1);
-INSERT INTO `fence` VALUES (4, '交大东校区', 500, 40, '北京交通大学', '[{\"lng\":116.352545,\"lat\":39.951505},{\"lng\":116.35426,\"lat\":39.950952},{\"lng\":116.354476,\"lat\":39.951547},{\"lng\":116.354754,\"lat\":39.952031},{\"lng\":116.354323,\"lat\":39.954395},{\"lng\":116.355275,\"lat\":39.954478},{\"lng\":116.355195,\"lat\":39.95481},{\"lng\":116.351745,\"lat\":39.954499},{\"lng\":116.351862,\"lat\":39.953807},{\"lng\":116.352104,\"lat\":39.952895},{\"lng\":116.352293,\"lat\":39.951554},{\"lng\":116.352545,\"lat\":39.951491}]', '2023-05-30', 1);
+INSERT INTO `fence` VALUES (4, '交大东校区', 0, 0, NULL, '[{\"lng\":116.353263,\"lat\":39.951823},{\"lng\":116.35426,\"lat\":39.950952},{\"lng\":116.354476,\"lat\":39.951547},{\"lng\":116.355994,\"lat\":39.949196},{\"lng\":116.354323,\"lat\":39.954395},{\"lng\":116.355275,\"lat\":39.954478},{\"lng\":116.355195,\"lat\":39.95481},{\"lng\":116.351745,\"lat\":39.954499},{\"lng\":116.351862,\"lat\":39.953807},{\"lng\":116.352104,\"lat\":39.952895},{\"lng\":116.352293,\"lat\":39.951554},{\"lng\":116.353407,\"lat\":39.95174}]', '2024-06-03', 1);
 INSERT INTO `fence` VALUES (5, '东操场南停车区', 200, 60, '北京交通大学', '[{\"lng\":116.350847,\"lat\":39.957565},{\"lng\":116.35091,\"lat\":39.957423},{\"lng\":116.352334,\"lat\":39.957682},{\"lng\":116.35228,\"lat\":39.957831},{\"lng\":116.350856,\"lat\":39.957568}]', '2023-05-30', 2);
 INSERT INTO `fence` VALUES (6, '西操停车区', 99, 0, '北京交通大学', '[{\"lng\":116.345241,\"lat\":39.957693},{\"lng\":116.345408,\"lat\":39.957738},{\"lng\":116.345461,\"lat\":39.957551},{\"lng\":116.34552,\"lat\":39.957368},{\"lng\":116.345358,\"lat\":39.957333},{\"lng\":116.345286,\"lat\":39.957517},{\"lng\":116.345246,\"lat\":39.957693}]', '2023-06-23', 2);
 INSERT INTO `fence` VALUES (7, '体育馆停车区', 100, 0, '北京交通大学', '[{\"lng\":116.343315,\"lat\":39.957264},{\"lng\":116.343377,\"lat\":39.957122},{\"lng\":116.343907,\"lat\":39.957216},{\"lng\":116.343836,\"lat\":39.957347},{\"lng\":116.343328,\"lat\":39.957264}]', '2023-06-06', 2);
@@ -138,19 +157,20 @@ INSERT INTO `fence` VALUES (9, '九教北停车区', 50, 0, '北京交通大学'
 INSERT INTO `fence` VALUES (10, '九教西停车区', 100, 0, '北京交通大学', '[{\"lng\":116.348089,\"lat\":39.955384},{\"lng\":116.348147,\"lat\":39.955228},{\"lng\":116.348336,\"lat\":39.955277},{\"lng\":116.348264,\"lat\":39.955415},{\"lng\":116.348085,\"lat\":39.955387}]', '2023-06-06', 2);
 INSERT INTO `fence` VALUES (11, '大坑停车区', 50, 0, '北京交通大学', '[{\"lng\":116.344774,\"lat\":39.956801},{\"lng\":116.344523,\"lat\":39.956763},{\"lng\":116.344478,\"lat\":39.956618},{\"lng\":116.344914,\"lat\":39.95649},{\"lng\":116.345129,\"lat\":39.956569},{\"lng\":116.345039,\"lat\":39.956756},{\"lng\":116.344779,\"lat\":39.956811}]', '2023-06-06', 2);
 INSERT INTO `fence` VALUES (15, '111', 25, 0, NULL, '[{\"lng\":116.354341,\"lat\":39.961861},{\"lng\":116.352275,\"lat\":39.961765},{\"lng\":116.350281,\"lat\":39.961668},{\"lng\":116.351107,\"lat\":39.961371},{\"lng\":116.350838,\"lat\":39.960707},{\"lng\":116.350065,\"lat\":39.959428},{\"lng\":116.35409,\"lat\":39.95929},{\"lng\":116.354485,\"lat\":39.960894},{\"lng\":116.354413,\"lat\":39.961889}]', '2023-06-23', 2);
+INSERT INTO `fence` VALUES (16, '新围栏 2024-06-11 14:39:32', 20, 0, NULL, '[{\"lng\":116.344554,\"lat\":39.958636},{\"lng\":116.34441,\"lat\":39.958236},{\"lng\":116.344599,\"lat\":39.958609},{\"lng\":116.345111,\"lat\":39.958623},{\"lng\":116.344761,\"lat\":39.958733},{\"lng\":116.344635,\"lat\":39.958761},{\"lng\":116.344572,\"lat\":39.958678}]', '2024-06-11', 2);
 
 -- ----------------------------
 -- Table structure for maintenance
 -- ----------------------------
 DROP TABLE IF EXISTS `maintenance`;
 CREATE TABLE `maintenance`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '唯一标识每次维修',
-  `bikeNumber` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '需要维修的自行车的ID',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '唯一标识每次维修',
+  `bikeNumber` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '需要维修的自行车的ID',
   `maintenanceTime` datetime NULL DEFAULT NULL COMMENT '进行维修的时间',
-  `maintenanceType` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '进行的维修的类型（例如：轮胎更换、刹车维修等）',
-  `maintenanceStatus` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '待维修' COMMENT '当前的维修状态，待维修，维修中，维修完成',
+  `maintenanceType` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '进行的维修的类型（例如：轮胎更换、刹车维修等）',
+  `maintenanceStatus` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '待维修' COMMENT '当前的维修状态，待维修，维修中，维修完成',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of maintenance
@@ -170,15 +190,15 @@ INSERT INTO `maintenance` VALUES (13, '0417', '2023-06-22 22:57:26', '坐垫维�
 -- ----------------------------
 DROP TABLE IF EXISTS `records`;
 CREATE TABLE `records`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userAccount` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `latitude` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `longitude` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `userAccount` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `latitude` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
+  `longitude` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL,
   `distance` double NULL DEFAULT NULL,
-  `time` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `duration` bigint(20) NULL DEFAULT NULL,
+  `time` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL,
+  `duration` bigint NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of records
@@ -197,20 +217,21 @@ INSERT INTO `records` VALUES (41, '2', '39.951209,39.950887806362566,39.95093154
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `userAccount` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `userPassword` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `userName` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `userNum` int(11) NOT NULL DEFAULT 0,
-  `userState` int(11) NULL DEFAULT NULL,
-  `userDel` int(11) NULL DEFAULT NULL,
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `userAccount` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `userPassword` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `userName` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `userNum` int NOT NULL DEFAULT 0,
+  `userState` int NULL DEFAULT NULL,
+  `userDel` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`, `userAccount`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (1, '2', '633de4b0c14ca52ea2432a3c8a5c4c31', 'ff', 6, 0, 0);
 INSERT INTO `user` VALUES (2, '123', '202cb962ac59075b964b07152d234b70', 'rr', 2, 0, 0);
+INSERT INTO `user` VALUES (3, '123', '123', '123', 0, 0, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
