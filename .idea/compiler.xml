@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Predict" />
+        <module name="android-end" />
+        <module name="CampusSharedBikeServer" />
+        <module name="LoginCloud" />
+        <module name="campussharedbikeservercharity" />
+        <module name="GateWay" />
+        <module name="Fence" />
+        <module name="maintenance" />
+        <module name="bike" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="CampusSharedBikeServer" options="-parameters" />
+      <module name="Fence" options="-parameters" />
+      <module name="GateWay" options="-parameters" />
+      <module name="LoginCloud" options="-parameters" />
+      <module name="Predict" options="-parameters" />
+      <module name="android-end" options="-parameters" />
+      <module name="bike" options="-parameters" />
+      <module name="campussharedbikeservercharity" options="-parameters" />
+      <module name="maintenance" options="-parameters" />
+    </option>
+  </component>
+</project>

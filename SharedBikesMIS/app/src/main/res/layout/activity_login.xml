@@ -100,7 +100,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="用户"
-                        android:textColor="@color/textBlue"
+                        android:textColor="@color/black"
                         android:textSize="17sp" />
 
                     <!--用户名编辑框-->
@@ -110,12 +110,12 @@
                         android:layout_height="48dp"
                         android:layout_margin="10dp"
                         android:layout_marginRight="5dp"
-                        android:background="@drawable/edittext_selector"
+                        android:background="#77B7E6"
                         android:hint="用户名"
                         android:minHeight="40dp"
                         android:paddingLeft="30dp"
                         android:singleLine="true"
-                        android:textColorHint="#95A1AA" />
+                        android:textColorHint="#4B90C5" />
                 </LinearLayout>
 
                 <!--中间的分割线-->
@@ -137,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="密码"
-                        android:textColor="@color/textBlue"
+                        android:textColor="@color/black"
                         android:textSize="17sp" />
 
                     <!--密码编辑框-->
@@ -147,13 +147,13 @@
                         android:layout_height="48dp"
                         android:layout_margin="10dp"
                         android:layout_weight="1"
-                        android:background="@drawable/edittext_selector"
+                        android:background="#77B7E6"
                         android:hint="密码"
                         android:inputType="textPassword"
                         android:minHeight="40dp"
                         android:paddingLeft="30dp"
                         android:singleLine="true"
-                        android:textColorHint="#95A1AA" />
+                        android:textColorHint="#4B90C5"/>
 
                 </LinearLayout>
 

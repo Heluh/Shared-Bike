@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="05e9e636-bb38-4642-9e57-068df8417afd" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/SharedBikesMIS/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SharedBikesMIS/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SharedBikesMIS/app/src/main/java/com/gxdcnjq/sharedbikesmis/ui/main2/Main2Activity.java" beforeDir="false" afterPath="$PROJECT_DIR$/SharedBikesMIS/app/src/main/java/com/gxdcnjq/sharedbikesmis/ui/main2/Main2Activity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SharedBikesMIS/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SharedBikesMIS/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SharedBikesMIS/app/src/main/res/mipmap-hdpi/bg_new.png" beforeDir="false" afterPath="$PROJECT_DIR$/SharedBikesMIS/app/src/main/res/mipmap-hdpi/bg_new.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SharedBikesMIS/app/src/main/res/mipmap-hdpi/logo_png.png" beforeDir="false" afterPath="$PROJECT_DIR$/SharedBikesMIS/app/src/main/res/mipmap-hdpi/logo_png.png" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/SharedBikesMIS">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2hp4a9nHVtCEe8fE6SXUj8eH60B" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Spring Boot.AndroidEndApplication">
+    <configuration name="AndroidEndApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="android-end" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.androidend.AndroidEndApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BikeApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="bike" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.bike.BikeApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BikeshareApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Predict" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.train.campussharedbikeserver.BikeshareApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CampusSharedBikeServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="CampusSharedBikeServer" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.train.campussharedbikeserver.CampusSharedBikeServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CampusSharedBikeServerCharityApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="campussharedbikeservercharity" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.train.campussharedbikeservercharity.CampusSharedBikeServerCharityApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CampusSharedBikeServerFenceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Fence" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.train.campussharedbikeserverfence.CampusSharedBikeServerFenceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GateWayApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="GateWay" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.gateway.GateWayApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoginCloud" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="LoginCloud" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.login.LoginCloud" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MaintenanceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="maintenance" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.maintenance.MaintenanceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="05e9e636-bb38-4642-9e57-068df8417afd" name="Changes" comment="" />
+      <created>1718277745609</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1718277745609</updated>
+      <workItem from="1718277747534" duration="636000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

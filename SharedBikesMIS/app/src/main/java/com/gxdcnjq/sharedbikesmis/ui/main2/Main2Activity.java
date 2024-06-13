@@ -400,6 +400,51 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
      *
      * @param savedInstanceState
      */
+//    private void initMap(Bundle savedInstanceState) {
+//        mapView = binding.mapView;
+//        //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
+//        mapView.onCreate(savedInstanceState);
+//        //初始化地图控制器对象
+//        aMap = mapView.getMap();
+//
+//        // 给地图设置标记点点击事件监听器
+//        aMap.setOnMarkerClickListener(this);
+//
+////        // 添加标记点
+////        aMap.addMarker(new MarkerOptions()
+////                        .position(new LatLng(39.33, 115.91))
+////                        .title("小黄车")
+////                        .snippet("这是一个小黄车")
+////                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
+////                .setClickable(true);
+//
+//        MyLocationStyle myLocationStyle = new MyLocationStyle();
+//        // 自定义定位蓝点图标
+//        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon5);
+//        int newWidth = 75; // 调整后的图标宽度
+//        int newHeight = 75; // 调整后的图标高度
+//        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, false);
+//        BitmapDescriptor customIcon = BitmapDescriptorFactory.fromBitmap(scaledBitmap);
+//        myLocationStyle.myLocationIcon(customIcon);
+//        // 自定义精度范围的圆形边框颜色  都为0则透明
+//        myLocationStyle.strokeColor(Color.argb(100, 33, 150, 243));
+//        // 自定义精度范围的圆形边框宽度  0 无宽度
+//        myLocationStyle.strokeWidth(5);
+//        // 设置圆形的填充颜色  都为0则透明
+//        myLocationStyle.radiusFillColor(Color.argb(100, 33, 150, 243));
+//        // 设置定位蓝点的Style
+//        aMap.setMyLocationStyle(myLocationStyle);
+//
+//
+//        //设置最小缩放等级为16 ，缩放级别范围为[3, 20]
+//        aMap.setMinZoomLevel(15);
+//
+//        // 设置定位监听
+//        aMap.setLocationSource(this);
+//        // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
+//        aMap.setMyLocationEnabled(true);
+//
+//    }
     private void initMap(Bundle savedInstanceState) {
         mapView = binding.mapView;
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
@@ -410,22 +455,9 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
         // 给地图设置标记点点击事件监听器
         aMap.setOnMarkerClickListener(this);
 
-//        // 添加标记点
-//        aMap.addMarker(new MarkerOptions()
-//                        .position(new LatLng(39.33, 115.91))
-//                        .title("小黄车")
-//                        .snippet("这是一个小黄车")
-//                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)))
-//                .setClickable(true);
-
         MyLocationStyle myLocationStyle = new MyLocationStyle();
-        // 自定义定位蓝点图标
-        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon5);
-        int newWidth = 75; // 调整后的图标宽度
-        int newHeight = 75; // 调整后的图标高度
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, false);
-        BitmapDescriptor customIcon = BitmapDescriptorFactory.fromBitmap(scaledBitmap);
-        myLocationStyle.myLocationIcon(customIcon);
+        // 删除自定义图标相关代码，使用默认的定位蓝点图标
+
         // 自定义精度范围的圆形边框颜色  都为0则透明
         myLocationStyle.strokeColor(Color.argb(100, 33, 150, 243));
         // 自定义精度范围的圆形边框宽度  0 无宽度
@@ -435,7 +467,6 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
         // 设置定位蓝点的Style
         aMap.setMyLocationStyle(myLocationStyle);
 
-
         //设置最小缩放等级为16 ，缩放级别范围为[3, 20]
         aMap.setMinZoomLevel(15);
 
@@ -443,7 +474,6 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
         aMap.setLocationSource(this);
         // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         aMap.setMyLocationEnabled(true);
-
     }
 
     /**
