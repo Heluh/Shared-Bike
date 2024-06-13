@@ -42,9 +42,6 @@ public class RepairRecordFragment extends Fragment {
         repairRecordListView = view.findViewById(R.id.repairRecordListView);
         repairRecordList = new ArrayList<>();
 
-        // 添加示例的报修记录数据
-        repairRecordList.add(new RepairRecord("2023-06-19: Flat tire"));
-
 
         repairRecordList = getData();
 
@@ -76,15 +73,9 @@ public class RepairRecordFragment extends Fragment {
 
             // 设置每个列表项的数据
             RepairRecord itemData = getItem(position);
-            repair_time_text.setText(TimeUtils.formatDateTime2(itemData.getCreateTime()));
-            repair_state_text.setText(itemData.getState());
-            repair_situation_text.setText(itemData.getSituation());
-            // 可以根据需要设置图片等其他数据
-            if(getItem(position).getPicture()!=null){
-                Glide.with(RepairRecordFragment.this.getView())
-                        .load(getItem(position).getPicture())
-                        .into(imageView);
-            }
+            repair_time_text.setText(TimeUtils.formatDateTime2(itemData.getMaintenanceTime()));
+            repair_state_text.setText(itemData.getMaintenanceStatus());
+            repair_situation_text.setText(itemData.getMaintenanceType());
 
             return convertView;
         }
@@ -93,16 +84,15 @@ public class RepairRecordFragment extends Fragment {
     public List<RepairRecord> getData(){
         List<RepairRecord> repairRecords = new ArrayList<RepairRecord>();
 
-        String res = OKHttpUtil.getSyncRequest(ApiConstants.BASE_URL_HTTP,"repairs/");
+        String res = OKHttpUtil.getSyncRequest(ApiConstants.BASE_URL_HTTP,"maintenance");
         if (res != null) {
             Log.d("Pan", res);
             // 使用 Gson 解析 JSON
             Gson gson = new Gson();
             try {
                 RepairRecordResponse response = gson.fromJson(res, RepairRecordResponse.class);
-                if (response.getCode().equals("200")) {
+                if (response.getCode().equals("0")) {
                     repairRecords = (List<RepairRecord>) response.getData();
-                    Log.d("Pan", repairRecords.get(0).getSituation());
                 } else {
                     Toast.makeText(getActivity(), response.getMsg(), Toast.LENGTH_SHORT).show();
                 }

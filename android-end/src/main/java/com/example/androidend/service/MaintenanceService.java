@@ -15,22 +15,52 @@ public class MaintenanceService {
 
 
     public Maintenance findById(Long id) {
-        return maintenanceMapper.findById(id);
+        try{
+            return maintenanceMapper.findById(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
     public List<Maintenance> findAll() {
-        return maintenanceMapper.findAll();
+        try {
+            return maintenanceMapper.findAll();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public List<Maintenance> findByUsername(String username) {
+        try{
+            return maintenanceMapper.findByUsername(username);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 
     public Maintenance save(Maintenance maintenance) {
-        maintenanceMapper.save(maintenance);
-        return maintenance;
+        try{
+            maintenanceMapper.save(maintenance);
+            return maintenance;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
     public void deleteById(Long id) {
-        maintenanceMapper.deleteById(id);
+        try{
+            maintenanceMapper.deleteById(id);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

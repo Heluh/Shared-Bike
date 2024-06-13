@@ -2,25 +2,12 @@ package com.gxdcnjq.sharedbikesmis.entity;
 
 public class RepairRecord {
     int id;
-    int bikeId;
-    int userId;
-    String situation;
-    String picture;
-    String state;
-    String createTime;
+    String bikeNumber;
+    String username;
+    String maintenanceType;
+    String maintenanceStatus;
+    String maintenanceTime;
 
-
-    public RepairRecord(String situation) {
-        this.situation = situation;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
 
     public int getId() {
         return id;
@@ -30,43 +17,40 @@ public class RepairRecord {
         this.id = id;
     }
 
-    public int getBikeId() {
-        return bikeId;
+    public String getBikeNumber() {
+        return bikeNumber;
     }
 
-    public void setBikeId(int bikeId) {
-        this.bikeId = bikeId;
+    public void setBikeNumber(String bikeNumber) {
+        this.bikeNumber = bikeNumber;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getSituation() {
-        return situation;
+    public String getMaintenanceType() {
+        return maintenanceType;
     }
 
-    public void setSituation(String situation) {
-        this.situation = situation;
+    public void setMaintenanceType(String maintenanceType) {
+        this.maintenanceType = maintenanceType;
     }
 
-    public String getPicture() {
-        return picture;
+    public String getMaintenanceStatus() {
+        return maintenanceStatus;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
+    public void setMaintenanceStatus(String maintenanceStatus) {
+        this.maintenanceStatus = maintenanceStatus;
     }
 
-    public String getState() {
-        return state;
+    public String getMaintenanceTime() {
+        return maintenanceTime;
     }
 
-    public void setState(String state) {
-        this.state = state;
-    }
 }

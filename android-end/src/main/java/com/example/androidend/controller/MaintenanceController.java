@@ -4,6 +4,7 @@ import com.example.androidend.annotation.LoginUser;
 import com.example.androidend.entity.Maintenance;
 import com.example.androidend.entity.User;
 import com.example.androidend.service.MaintenanceService;
+import com.example.androidend.utils.R;
 import jakarta.annotation.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,32 +20,39 @@ public class MaintenanceController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Maintenance> findById(@PathVariable Long id) {
+    public R findById(@PathVariable Long id) {
         Maintenance maintenance = maintenanceService.findById(id);
         if (maintenance != null) {
-            return ResponseEntity.ok(maintenance);
+            return R.ok().put("data", maintenance);
         } else {
-            return ResponseEntity.notFound().build();
+            return R.error("Maintenance not found");
         }
     }
 
-    @GetMapping
-    public ResponseEntity<List<Maintenance>> findAll() {
+    @GetMapping("/all")
+    public R findAll() {
         List<Maintenance> maintenances = maintenanceService.findAll();
-        return ResponseEntity.ok(maintenances);
+        return R.ok().put("data", maintenances);
+    }
+
+    @GetMapping
+    public R findByUsername( @LoginUser User user) {
+        String username = user.getUsername();
+        List<Maintenance> maintenances = maintenanceService.findByUsername(username);
+        return R.ok().put("data", maintenances);
     }
 
     @PostMapping
-    public ResponseEntity<Maintenance> save(@RequestBody Maintenance maintenance,
-                                            @LoginUser User user) {
+    public R save(@RequestBody Maintenance maintenance,
+                  @LoginUser User user) {
         maintenance.setUsername(user.getUsername());
         Maintenance savedMaintenance = maintenanceService.save(maintenance);
-        return ResponseEntity.ok(savedMaintenance);
+        return R.ok().put("data", savedMaintenance);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+    public R deleteById(@PathVariable Long id) {
         maintenanceService.deleteById(id);
-        return ResponseEntity.noContent().build();
+        return R.ok();
     }
 }

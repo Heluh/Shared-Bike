@@ -10,20 +10,17 @@ public class Maintenance {
 
     private Long id;
 
-
     private String bikeNumber;
 
+    private String username;
 
     private Date maintenanceTime;
 
-
     private String maintenanceType;
-
 
     private String maintenanceStatus;
 
 
-    private String username;
 
 
 }

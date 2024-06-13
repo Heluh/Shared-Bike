@@ -1,6 +1,5 @@
 package com.example.androidend.mapper;
 
-
 import com.example.androidend.entity.Maintenance;
 import org.apache.ibatis.annotations.*;
 
@@ -13,6 +12,9 @@ public interface MaintenanceMapper {
 
     @Select("SELECT * FROM maintenance")
     List<Maintenance> findAll();
+
+    @Select("SELECT * FROM maintenance WHERE username = #{username}")
+    List<Maintenance> findByUsername(@Param("username") String username);
 
     @Insert("INSERT INTO maintenance(bikeNumber, maintenanceTime, maintenanceType, maintenanceStatus, username) " +
             "VALUES(#{bikeNumber}, #{maintenanceTime}, #{maintenanceType}, #{maintenanceStatus}, #{username})")
