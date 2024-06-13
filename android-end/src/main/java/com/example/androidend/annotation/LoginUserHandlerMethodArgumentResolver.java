@@ -27,7 +27,7 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
         String token = request.getHeader("Authorization");
         if (token == null || !token.startsWith("Bearer ")) {
             return null;
-        }else{
+        } else {
             token = token.substring(7);
 
             // 解析token

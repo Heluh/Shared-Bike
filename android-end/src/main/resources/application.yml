@@ -1,9 +1,9 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/shared_bike?useSSL=false&useUnicode=true&characterEncoding=utf-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://101.42.92.57:3306/shared_bike?useSSL=false&useUnicode=true&characterEncoding=utf-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
     username: root
-    password: 12345678
+    password: ZRSz2580
   servlet:
     multipart:
       max-file-size: 300MB
@@ -14,7 +14,7 @@ spring:
       static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
   data:
     redis:
-      host: localhost
+      host: 101.42.92.57
       port: 6379
       database: 0
       timeout: 10000
@@ -24,6 +24,7 @@ spring:
           max-wait: -1
           max-idle: 8
           min-idle: 0
+      password: ZRSz2580
 
 mybatis:
     mapper-locations: classpath*:mapper/*.xml

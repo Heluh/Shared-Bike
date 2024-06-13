@@ -1,6 +1,7 @@
 package com.example.androidend.controller;
 
 import com.example.androidend.annotation.IgnoreAuth;
+import com.example.androidend.annotation.LoginUser;
 import com.example.androidend.entity.User;
 import com.example.androidend.service.UserService;
 import com.example.androidend.utils.JwtUtil;
@@ -74,6 +75,14 @@ public class UserController {
 		userService.save(user);
 		return R.ok();
 	}
+
+	@GetMapping("/profile")
+	public String userProfile(@LoginUser User user) {
+		return "User: " + user.getUsername();
+	}
+
+
+
 
 
 }
