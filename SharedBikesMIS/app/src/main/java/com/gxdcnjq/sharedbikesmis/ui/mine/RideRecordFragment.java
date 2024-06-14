@@ -1,8 +1,10 @@
 package com.gxdcnjq.sharedbikesmis.ui.mine;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +42,8 @@ import com.gxdcnjq.sharedbikesmis.entity.Location;
 import com.gxdcnjq.sharedbikesmis.entity.RideRecord;
 import com.gxdcnjq.sharedbikesmis.entity.TrackRecord;
 import com.gxdcnjq.sharedbikesmis.entity.TrackRecordResponse;
+import com.gxdcnjq.sharedbikesmis.ui.track.TrackMapActivity;
+import com.gxdcnjq.sharedbikesmis.utils.MapUtil;
 import com.gxdcnjq.sharedbikesmis.utils.OKHttpUtil;
 import com.gxdcnjq.sharedbikesmis.utils.TimeUtils;
 
@@ -64,7 +68,6 @@ public class RideRecordFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ride_record, container, false);
 
 
-
         rideRecordListView = view.findViewById(R.id.rideRecordListView);
         trackRecordList = new ArrayList<>();
 
@@ -80,12 +83,19 @@ public class RideRecordFragment extends Fragment {
         rideRecordListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // 获取选中的 RideRecord 对象
                 RideRecord rideRecord = rideRecordList.get(position);
-                // 在点击某个列表项后的点击事件中调用以下代码显示对话框
-                MapDialog mapDialog = new MapDialog(getContext(), rideRecord.getLocationList());
-                mapDialog.show();
+
+                // 创建意图，并将 RideRecord 对象传递到 TrackMapActivity 中
+                Intent intent = new Intent(getContext(), TrackMapActivity.class);
+                intent.putExtra("rideRecord", rideRecord);
+
+                // 使用 startActivity 启动 TrackMapActivity
+                startActivity(intent);
             }
         });
+
+
 
 
         return view;
@@ -97,8 +107,10 @@ public class RideRecordFragment extends Fragment {
             super(context, R.layout.ride_list_item, data);
         }
 
+        @NonNull
+        @SuppressLint("SetTextI18n")
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.ride_list_item, parent, false);
             }
@@ -110,90 +122,73 @@ public class RideRecordFragment extends Fragment {
 
             // 设置每个列表项的数据
             RideRecord itemData = getItem(position);
-            List<Location> locationList = itemData.getLocationList();
             DecimalFormat decimalFormat = new DecimalFormat("0.00");
+            assert itemData != null;
             String formattedDistance = decimalFormat.format(itemData.getDistance()) + " km";
-            ride_id_text.setText("编号 "+String.valueOf(position+1) + "  距离 "+formattedDistance);
-            ride_start_text.setText("开始 | "+TimeUtils.formatDateTime(itemData.getStartTime()));
-            ride_end_text.setText("结束 | "+TimeUtils.formatDateTime(itemData.getEndTime()));
-            // 可以根据需要设置图片等其他数据
+            ride_id_text.setText("距离 ： "+formattedDistance);
+            ride_start_text.setText("开始 ： "+TimeUtils.formatDateTime(itemData.getStartTime()));
+            ride_end_text.setText("时长 ： " + TimeUtils.formatDuration(itemData.getDuration()));
+            imageView.setImageResource(R.drawable.bike);
 
             return convertView;
         }
     }
 
-    public List<TrackRecord> getData(){
-        List<TrackRecord> trackRecord = new ArrayList<TrackRecord>();
+    public List<TrackRecord> getData() {
+        List<TrackRecord> trackRecordList = new ArrayList<>();
 
-        String res = OKHttpUtil.getSyncRequest(ApiConstants.BASE_URL_HTTP,"tracks/");
+        String res = OKHttpUtil.getSyncRequest(ApiConstants.BASE_URL_HTTP, "record");
         if (res != null) {
             Log.d("Pan", res);
-            // 使用 Gson 解析 JSON
             Gson gson = new Gson();
             try {
                 TrackRecordResponse response = gson.fromJson(res, TrackRecordResponse.class);
-                if (response.getCode().equals("200")) {
-                    trackRecord = (List<TrackRecord>) response.getData();
+                if ("0".equals(response.getCode())) {
+                    trackRecordList = response.getData();
                 } else {
                     Toast.makeText(getActivity(), response.getMsg(), Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-//                Toast.makeText(getActivity(), "数据解析错误", Toast.LENGTH_SHORT).show();
-                Log.e("Pan","track数据get解析错误");
+                Log.e("Pan", "Data parsing error");
             }
         } else {
-            Toast.makeText(getActivity(), "服务器连接超时", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Server connection timeout", Toast.LENGTH_SHORT).show();
         }
 
-        return trackRecord;
+        return trackRecordList;
     }
 
-    public List<RideRecord> process(List<TrackRecord> trackRecordList){
+
+    public List<RideRecord> process(List<TrackRecord> trackRecordList) {
         Map<String, RideRecord> rideMap = new HashMap<>();
 
-        // 遍历 trackList
         for (TrackRecord track : trackRecordList) {
-            String recordId = track.getRecordId();
-            String createTime = track.getCreateTime();
+            String recordId = String.valueOf(track.getId());
+            String createTime = track.getTime();
+            double trackDistance = track.getDistance();
+            long duration = track.getDuration();
+            String[] latitudes = track.getLatitude().split(",");
+            String[] longitudes = track.getLongitude().split(",");
+            RideRecord rideRecord = new RideRecord(recordId, createTime, duration);
+            rideRecord.setStartTime(createTime);
+            rideRecord.setDistance(trackDistance);
+            rideMap.put(recordId, rideRecord);
 
-            // 如果 rideMap 中不存在当前 recordId 的 ride，则创建新的 ride
-            if (!rideMap.containsKey(recordId)) {
-                RideRecord rideRecord = new RideRecord(recordId, createTime, createTime);
-                rideMap.put(recordId, rideRecord);
-            } else {
-                // 如果 rideMap 中已存在当前 recordId 的 ride，则更新开始时间和结束时间
-                RideRecord rideRecord = rideMap.get(recordId);
-                if (createTime.compareTo(rideRecord.getStartTime()) < 0) {
-                    rideRecord.setStartTime(createTime);
-                } else if (createTime.compareTo(rideRecord.getEndTime()) > 0) {
-                    rideRecord.setEndTime(createTime);
-                }
-            }
-
-            // 将当前 track 的 location 添加到对应 ride 的 locations 列表中
-            RideRecord rideRecord = rideMap.get(recordId);
-            String locationStr = track.getLocation();
-            // 去除方括号并按逗号分隔字符串
-            String[] parts = locationStr.replaceAll("[\\[\\]]", "").split(",");
-            // 解析经度和纬度
-            double latitude = Double.parseDouble(parts[0].trim());
-            double longitude = Double.parseDouble(parts[1].trim());
-            Location location = new Location(latitude,longitude);
-            rideRecord.getLocationList().add(location);
-
-            // 计算距离并累加
-            if (rideRecord.getLocationList().size() >= 2) {
-                Location lastLocation = rideRecord.getLocationList().get(rideRecord.getLocationList().size() - 2);
-                double distance = calculateDistance(lastLocation.getLatitude(), lastLocation.getLongitude(), latitude, longitude);
-                rideRecord.setDistance(rideRecord.getDistance() + distance);
+            for (int i = 0; i < latitudes.length; i++) {
+                double latitude = Double.parseDouble(latitudes[i].trim());
+                double longitude = Double.parseDouble(longitudes[i].trim());
+//                double bdLatitude = Double.parseDouble(latitudes[i].trim());
+//                double bdLongitude = Double.parseDouble(longitudes[i].trim());
+//                double[] wgs84 = MapUtil.bd09ToWgs84(bdLongitude, bdLatitude);
+//                double latitude = wgs84[1];
+//                double longitude = wgs84[0];
+                Location location = new Location(latitude, longitude);
+                rideRecord.getLocationList().add(location);
             }
         }
 
-        // 将 rideMap 中的 rides 转换为 List<Ride>
         List<RideRecord> rideList = new ArrayList<>(rideMap.values());
-
-        // 按照开始时间进行排序
         rideList.sort(Comparator.comparing(RideRecord::getStartTime));
         return rideList;
     }

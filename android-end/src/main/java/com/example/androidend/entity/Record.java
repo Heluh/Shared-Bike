@@ -1,14 +1,17 @@
-package com.train.campussharedbikeserver.bean;
+package com.example.androidend.entity;
 
 import lombok.Data;
+
+import java.time.Duration;
 
 @Data
 public class Record {
     private int id;
-    private String userAccount;
+    private String username;
     private String latitude;
     private String longitude;
-    private int distance;
+    private double distance;
     private String time;
+    private long duration;
 
 }

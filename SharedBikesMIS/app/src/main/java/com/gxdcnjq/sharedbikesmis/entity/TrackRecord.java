@@ -2,63 +2,59 @@ package com.gxdcnjq.sharedbikesmis.entity;
 
 public class TrackRecord {
 
-    private int id;
+    private String id;
+    private String latitude;
+    private String longitude;
+    private double distance;
+    private String time;
+    private long duration;
 
-    private int bikeId;
 
-    private int userId;
-
-    private String location;
-
-    private String recordId;
-
-    private String createTime;
-
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getBikeId() {
-        return bikeId;
+    public String getLatitude() {
+        return latitude;
     }
 
-    public void setBikeId(int bikeId) {
-        this.bikeId = bikeId;
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getLongitude() {
+        return longitude;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
     }
 
-    public String getLocation() {
-        return location;
+    public double getDistance() {
+        return distance;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
-    public String getRecordId() {
-        return recordId;
+    public String getTime() {
+        return time;
     }
 
-    public void setRecordId(String recordId) {
-        this.recordId = recordId;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public long getDuration() {
+        return duration;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 }

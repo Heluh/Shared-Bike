@@ -73,35 +73,35 @@ public class PersonalCenterActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
 
-        // 根据token获取用户信息
-        String res = OKHttpUtil.getSyncRequest(ApiConstants.BASE_URL_HTTP,"user/");
-        if (res != null) {
-            // 使用 Gson 解析 JSON
-            Gson gson = new Gson();
-            try {
-                LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
-                if (loginResponse.getCode().equals("200")) {
-                    // 访问解析后的数据
-                    UserResponse userResponse = loginResponse.getData();
-                    username = userResponse.getUsername();
-                    avatar = userResponse.getAvatar();
-                } else {
-                    Toast.makeText(this, "获取用户信息出错", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(this, "用户数据解析错误", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            Toast.makeText(this, "服务器连接超时", Toast.LENGTH_SHORT).show();
-        }
-        usernameTextView.setText(username);
-        // 获取用户头像
-        if(avatar!=null){
-            Glide.with(this)
-                    .load(avatar)
-                    .into(avatarImageView);
-        }
+//        // 根据token获取用户信息
+//        String res = OKHttpUtil.getSyncRequest(ApiConstants.BASE_URL_HTTP,"user/");
+//        if (res != null) {
+//            // 使用 Gson 解析 JSON
+//            Gson gson = new Gson();
+//            try {
+//                LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
+//                if (loginResponse.getCode().equals("200")) {
+//                    // 访问解析后的数据
+//                    UserResponse userResponse = loginResponse.getData();
+//                    username = userResponse.getUsername();
+//                    avatar = userResponse.getAvatar();
+//                } else {
+//                    Toast.makeText(this, "获取用户信息出错", Toast.LENGTH_SHORT).show();
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                Toast.makeText(this, "用户数据解析错误", Toast.LENGTH_SHORT).show();
+//            }
+//        } else {
+//            Toast.makeText(this, "服务器连接超时", Toast.LENGTH_SHORT).show();
+//        }
+//        usernameTextView.setText(username);
+//        // 获取用户头像
+//        if(avatar!=null){
+//            Glide.with(this)
+//                    .load(avatar)
+//                    .into(avatarImageView);
+//        }
 
         // 初始化ViewPager
         rideRecordFragment = new RideRecordFragment();

@@ -35,6 +35,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SharedBikesMIS"
         android:usesCleartextTraffic="true"
+        android:allowNativeHeapPointerTagging="false"
         tools:targetApi="31">
         <activity
             android:name=".ui.repair.RepairActivity"
@@ -48,6 +49,10 @@
         <activity
             android:name=".ui.register.RegisterActivity"
             android:exported="true" />
+        <activity
+            android:name=".ui.track.TrackMapActivity"
+            android:exported="true" />
+
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">

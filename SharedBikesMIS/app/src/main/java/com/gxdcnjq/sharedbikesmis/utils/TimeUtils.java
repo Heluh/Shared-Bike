@@ -15,6 +15,23 @@ public class TimeUtils {
         return dateString;
     }
 
+    public static String formatDuration(long seconds) {
+        long hours = seconds / 3600;
+        long minutes = (seconds % 3600) / 60;
+        long secs = seconds % 60;
+
+        StringBuilder sb = new StringBuilder();
+        if (hours > 0) {
+            sb.append(hours).append("小时 ");
+        }
+        if (minutes > 0) {
+            sb.append(minutes).append("分钟 ");
+        }
+        sb.append(secs).append("秒");
+
+        return sb.toString();
+    }
+
     public static String timestampToStringBase(Timestamp timestamp) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String dateString = dateFormat.format(new Date(timestamp.getTime()));

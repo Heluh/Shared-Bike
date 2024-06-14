@@ -60,6 +60,7 @@ import com.gxdcnjq.sharedbikesmis.entity.Response;
 import com.gxdcnjq.sharedbikesmis.ui.bluetooth.BluetoothActivity;
 import com.gxdcnjq.sharedbikesmis.ui.mine.PersonalCenterActivity;
 import com.gxdcnjq.sharedbikesmis.ui.repair.RepairActivity;
+import com.gxdcnjq.sharedbikesmis.utils.MapUtil;
 import com.gxdcnjq.sharedbikesmis.utils.OKHttpUtil;
 
 import org.json.JSONArray;
@@ -620,25 +621,7 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
         isMenuOpen = false;
     }
 
-    public static double[] bd09ToWgs84(double bdLon, double bdLat) {
-        double[] wgs84 = new double[2];
-        double x = bdLon - 0.0065, y = bdLat - 0.006;
-        double z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * Math.PI);
-        double theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * Math.PI);
-        wgs84[0] = z * Math.cos(theta);
-        wgs84[1] = z * Math.sin(theta);
-        return wgs84;
-    }
 
-    public static double[] wgs84ToBd09(double wgLon, double wgLat) {
-        double[] bd09 = new double[2];
-        double x = wgLon, y = wgLat;
-        double z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * Math.PI);
-        double theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * Math.PI);
-        bd09[0] = z * Math.cos(theta) + 0.0065;
-        bd09[1] = z * Math.sin(theta) + 0.006;
-        return bd09;
-    }
 
     /**
      * 刷新当前可用单车
@@ -668,7 +651,7 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
                         double bdLatitude = bike.getLatitude();
                         double bdLongitude = bike.getLongitude();
                         //将百度地图的经纬度转换为高德地图的经纬度
-                        double[] wgs84 = bd09ToWgs84(bdLongitude, bdLatitude);
+                        double[] wgs84 = MapUtil.bd09ToWgs84(bdLongitude, bdLatitude);
                         double longitude = wgs84[0];
                         double latitude = wgs84[1];
                         Log.d("Pan",String.valueOf(latitude));
@@ -676,8 +659,8 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
                         // 添加标记点
                         // 创建自定义图标
                         Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bike_icon);
-                        int newWidth = 90; // 调整后的图标宽度
-                        int newHeight = 90; // 调整后的图标高度
+                        int newWidth = 85; // 调整后的图标宽度
+                        int newHeight = 50; // 调整后的图标高度
                         Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, false);
                         BitmapDescriptor customIcon = BitmapDescriptorFactory.fromBitmap(scaledBitmap);
                         aMap.addMarker(new MarkerOptions()
@@ -724,7 +707,7 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
                             double bdLatitude = pointObject.getDouble("lat");
                             double bdLongitude = pointObject.getDouble("lng");
                             //将百度地图的经纬度转换为高德地图的经纬度
-                            double[] wgs84 = bd09ToWgs84(bdLongitude, bdLatitude);
+                            double[] wgs84 = MapUtil.bd09ToWgs84(bdLongitude, bdLatitude);
                             double longitude = wgs84[0];
                             double latitude = wgs84[1];
                             latLngs.add(new LatLng(latitude, longitude));
@@ -872,7 +855,7 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
     public void lock(String bikeMac, double latitude, double longitude) {
         Map<String, String> queryParams = new HashMap<>();
         Map<String, String> formDataParams = new HashMap<>();
-        double[] bd09 = wgs84ToBd09(longitude, latitude);
+        double[] bd09 = MapUtil.wgs84ToBd09(longitude, latitude);
         double bdLongitude = bd09[0];
         double bdLatitude = bd09[1];
         formDataParams.put("bikeNumber", bikeMac);
@@ -1102,6 +1085,7 @@ public class Main2Activity extends AppCompatActivity implements AMapLocationList
 
         return false;
     }
+
 
 
 }

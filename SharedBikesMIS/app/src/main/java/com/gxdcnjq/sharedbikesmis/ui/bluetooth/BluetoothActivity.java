@@ -305,7 +305,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
 //                pairedDevices = new ArrayList<>(mBluetoothAdapter.getBondedDevices());
 //                for (BluetoothDevice device : pairedDevices) {
-//                    mDevices.add(device);
+//                     mDevices.add(device);
 //                    adapter.add("[已配对]" + device.getName() + "\n" + device.getAddress());
 //                }
 
