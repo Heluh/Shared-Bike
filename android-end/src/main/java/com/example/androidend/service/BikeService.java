@@ -32,9 +32,18 @@ public class BikeService {
         }
     }
 
-    public void unlock(Integer id) {
+    public Bike findByBikeNumber(String bikeNumber) {
         try {
-            bikeMapper.unlock(id);
+            return bikeMapper.findBikeByNumber(bikeNumber);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void unlock(String bikeNumber) {
+        try {
+            bikeMapper.unlock(bikeNumber);
         } catch (Exception e) {
             e.printStackTrace();
         }

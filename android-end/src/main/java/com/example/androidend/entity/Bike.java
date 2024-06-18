@@ -10,7 +10,7 @@ public class Bike {
 
     private String bikeNumber;
 
-    private String status;
+    private byte status;
 
     private double longitude;
 
@@ -21,4 +21,8 @@ public class Bike {
     private String lastUpdateTime;
 
     private int fenceId;
+
+    public static final byte STATUS_AVAILABLE = 0;
+
+    public static final byte STATUS_USING = 1;
 }

@@ -2,7 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.androidend.mapper.RecordMapper">
+
+    <resultMap id="recordResultMap" type="com.example.androidend.entity.Record">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+        <result property="distance" column="distance"/>
+        <result property="time" column="time"/>
+        <result property="duration" column="duration"/>
+        <result property="status" column="status"/>
+        <result property="bikeNum" column="bike_num"/> <!-- 确保映射到正确的数据库字段 -->
+        <result property="contrail" column="contrail"/>
+    </resultMap>
+
     <select id="findByUserName" resultType="com.example.androidend.entity.Record">
         select * from records where userName = #{userName};
+    </select>
+
+    <insert id="save" parameterType="com.example.androidend.entity.Record">
+        INSERT INTO records (username, bike_num, distance, time, duration, status, contrail)
+        VALUES (#{username}, #{bikeNum}, #{distance}, #{time}, #{duration}, #{status}, #{contrail})
+    </insert>
+
+    <update id="update" parameterType="com.example.androidend.entity.Record">
+        UPDATE records
+        SET username = #{username},
+            bike_num = #{bikeNum},
+            distance = #{distance},
+            time = #{time},
+            duration = #{duration},
+            status = #{status},
+            contrail = #{contrail}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findByBikeNumberAndStatus" resultMap="recordResultMap">
+        select * from records where bike_num = #{bikeNumber} and status = #{status};
+    </select>
+
+    <select id="findById" resultMap="recordResultMap">
+        select * from records where id = #{id};
+    </select>
+
+    <select id="findByUsernameAndStatus" resultMap="recordResultMap">
+        select * from records where username = #{username} and status = #{status};
     </select>
 </mapper>

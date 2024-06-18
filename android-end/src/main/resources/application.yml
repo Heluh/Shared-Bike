@@ -3,7 +3,11 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://101.42.92.57:3306/shared_bike?useSSL=false&useUnicode=true&characterEncoding=utf-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
     username: root
-    password: ZRSz258
+    password: ZRSz2580
+    tomcat:
+      time-between-eviction-runs-millis: 600000
+      min-evictable-idle-time-millis: 1800000
+
   servlet:
     multipart:
       max-file-size: 300MB

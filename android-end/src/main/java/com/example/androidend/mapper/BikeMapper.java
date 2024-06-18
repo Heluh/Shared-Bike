@@ -12,7 +12,7 @@ public interface BikeMapper {
 
     Bike findBikeByNumber(String bikeNumber);
 
-    void unlock(Integer id);
+    void unlock(String bikeNumber);
 
     void lock(String bikeNumber);
 }

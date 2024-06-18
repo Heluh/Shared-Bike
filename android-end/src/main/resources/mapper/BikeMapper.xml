@@ -15,7 +15,7 @@
 
     <!-- 开锁 -->
     <update id="unlock" parameterType="com.example.androidend.entity.Bike">
-        UPDATE bike SET status = 1 WHERE id = #{id}
+        UPDATE bike SET status = 1 WHERE bikeNumber = #{bikeNumber}
     </update>
 
     <!-- 关锁 -->

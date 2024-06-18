@@ -23,4 +23,5 @@ public class Maintenance {
     @Schema(description ="维修状态")
     private String maintenanceStatus;
 
+    private String username;
 }
