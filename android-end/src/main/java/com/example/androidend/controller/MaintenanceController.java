@@ -9,6 +9,7 @@ import jakarta.annotation.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -45,7 +46,10 @@ public class MaintenanceController {
     @PostMapping
     public R save(@RequestBody Maintenance maintenance,
                   @LoginUser User user) {
+        System.out.println(maintenance.getBikeNumber());
         maintenance.setUsername(user.getUsername());
+        maintenance.setMaintenanceTime(new Date());
+        maintenance.setMaintenanceStatus("待维修");
         Maintenance savedMaintenance = maintenanceService.save(maintenance);
         return R.ok().put("data", savedMaintenance);
     }
